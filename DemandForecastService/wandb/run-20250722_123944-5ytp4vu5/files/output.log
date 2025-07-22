@@ -1,0 +1,46 @@
+ERROR:ml_pipeline.predictor:Failed to load model: RESOURCE_DOES_NOT_EXIST: Registered Model with name=demand_forecasting_xgb not found
+INFO:ml_pipeline.orchestrator:Starting training pipeline
+INFO:ml_pipeline.extractor:Loading Orders and OrderDetails as DataFrames...
+INFO:ml_pipeline.extractor:Extracted data successfully
+ERROR:ml_pipeline.orchestrator:Training pipeline failed: 'ID'
+[31mERROR[0m:    Traceback (most recent call last):
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/starlette/routing.py", line 694, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/fastapi/routing.py", line 134, in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+               ~~~~~~~~~~~~~~~~^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/main.py", line 29, in lifespan
+    orchestrator.run_training_pipeline()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/ml_pipeline/orchestrator.py", line 38, in run_training_pipeline
+    df = self.extractor.extract_orders(start_date, end_date)
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/ml_pipeline/extractor.py", line 35, in extract_orders
+    merged_df = pd.merge(
+        filtered_orders,
+    ...<3 lines>...
+        how='inner'
+    )
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/pandas/core/reshape/merge.py", line 170, in merge
+    op = _MergeOperation(
+        left_df,
+    ...<10 lines>...
+        validate=validate,
+    )
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/pandas/core/reshape/merge.py", line 794, in __init__
+    ) = self._get_merge_keys()
+        ~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/pandas/core/reshape/merge.py", line 1311, in _get_merge_keys
+    left_keys.append(left._get_label_or_level_values(lk))
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/pandas/core/generic.py", line 1911, in _get_label_or_level_values
+    raise KeyError(key)
+KeyError: 'ID'
+
+[31mERROR[0m:    Application startup failed. Exiting.

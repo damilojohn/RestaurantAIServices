@@ -1,0 +1,37 @@
+{
+  "os":  "macOS-15.0-arm64-arm-64bit-Mach-O",
+  "python":  "CPython 3.13.5",
+  "startedAt":  "2025-07-22T11:30:31.202265Z",
+  "program":  "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/main.py",
+  "codePath":  "DemandForecastService/main.py",
+  "codePathLocal":  "main.py",
+  "git":  {
+    "remote":  "https://github.com/damilojohn/RestaurantAIServices.git",
+    "commit":  "9ff6d2f490e553e6c786da71849a381376689947"
+  },
+  "email":  "oduguwadamilola40@gmail.com",
+  "root":  "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService",
+  "host":  "Damilolas-Macbook-Air.local",
+  "executable":  "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/bin/python3",
+  "cpu_count":  8,
+  "cpu_count_logical":  8,
+  "disk":  {
+    "/":  {
+      "total":  "245107195904",
+      "used":  "138878386176"
+    }
+  },
+  "memory":  {
+    "total":  "8589934592"
+  },
+  "apple":  {
+    "name":  "Apple M1",
+    "ecpuCores":  4,
+    "pcpuCores":  4,
+    "gpuCores":  7,
+    "memoryGb":  8,
+    "swapTotalBytes":  "9663676416",
+    "ramTotalBytes":  "8589934592"
+  },
+  "writerId":  "s6ex843mwigydkb16q1duz1pf3zj2l2n"
+}

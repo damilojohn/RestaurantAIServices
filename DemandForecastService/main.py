@@ -1,19 +1,46 @@
 import threading
 import logging
-from contextlib import asynccontextmanager 
+import structlog
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from api.endpoints import router as api_router
-from api.ml_pipeline.notification_service import manager
-from api.ml_pipeline.orchestrator import MLPipelineOrchestrator
+
+from ml_pipeline.notification_service import manager
+from ml_pipeline.orchestrator import MLPipelineOrchestrator
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+LOG = structlog.stdlib.get_logger()
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI) -> AsyncIterator:
+    LOG.info("AI API starting.....")
+    
+    orchestrator = MLPipelineOrchestrator()
+
+    # orchestrator_thread = threading.Thread(target=orchestrator.run, daemon=True)
+    # orchestrator_thread.start()
+
+    orchestrator.run_training_pipeline()
+
+    try:
+        LOG.info("API Started.....")
+
+        yield
+    
+    finally:
+        LOG.info("API Shutting down .....")
 
 app = FastAPI(
     title="Restaurant AI Service",
     description="Complete ML Pipeline for Restaurant Demand Forecasting",
     version="2.0.0",
+    lifespan=lifespan
 )
 
 app.add_middleware(
@@ -37,23 +64,19 @@ async def websocket_endpoint(websocket: WebSocket):
     except WebSocketDisconnect:
         manager.disconnect(websocket)
 
-@app.on_event("startup")
-def on_startup():
-    """Initialize services on startup"""
-    logger.info("Starting Restaurant AI Service")
+# @app.on_event("startup")
+# def on_startup():
+#     """Initialize services on startup"""
+#     logger.info("Starting Restaurant AI Service")
     
-    # Start ML pipeline orchestrator in background
-    orchestrator = MLPipelineOrchestrator()
+#     # Start ML pipeline orchestrator in background
+#     orchestrator = MLPipelineOrchestrator()
     
-    # Run orchestrator in separate thread
-    orchestrator_thread = threading.Thread(target=orchestrator.run, daemon=True)
-    orchestrator_thread.start()
+#     # Run orchestrator in separate thread
+#     orchestrator_thread = threading.Thread(target=orchestrator.run, daemon=True)
+#     orchestrator_thread.start()
     
-    logger.info("ML Pipeline orchestrator started")
-
-
-def lifespan(app: FastAPI):
-
+#     logger.info("ML Pipeline orchestrator started")
 
 
 if __name__ == "__main__":

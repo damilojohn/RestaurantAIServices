@@ -1,0 +1,13 @@
+{"time":"2025-07-22T11:55:07.987585+01:00","level":"INFO","msg":"stream: starting","core version":"0.21.0"}
+{"time":"2025-07-22T11:55:09.636399+01:00","level":"INFO","msg":"stream: created new stream","id":"0g1id1r8"}
+{"time":"2025-07-22T11:55:09.63646+01:00","level":"INFO","msg":"stream: started","id":"0g1id1r8"}
+{"time":"2025-07-22T11:55:09.636485+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"0g1id1r8"}
+{"time":"2025-07-22T11:55:09.63681+01:00","level":"INFO","msg":"sender: started","stream_id":"0g1id1r8"}
+{"time":"2025-07-22T11:55:09.636851+01:00","level":"INFO","msg":"handler: started","stream_id":"0g1id1r8"}
+{"time":"2025-07-22T12:03:38.489544+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/damilojohn/RestaurantDemandForecasting/0g1id1r8/file_stream\": dial tcp 35.186.228.49:443: connect: operation timed out"}
+{"time":"2025-07-22T12:07:11.165522+01:00","level":"INFO","msg":"stream: closing","id":"0g1id1r8"}
+{"time":"2025-07-22T12:07:15.043609+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-22T12:07:15.550399+01:00","level":"INFO","msg":"sender: closed","stream_id":"0g1id1r8"}
+{"time":"2025-07-22T12:07:15.552951+01:00","level":"INFO","msg":"handler: closed","stream_id":"0g1id1r8"}
+{"time":"2025-07-22T12:07:15.552964+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"0g1id1r8"}
+{"time":"2025-07-22T12:07:15.5554+01:00","level":"INFO","msg":"stream: closed","id":"0g1id1r8"}

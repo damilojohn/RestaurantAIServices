@@ -1,3 +1,15 @@
-offline_store:
+# project: restaurant_demand_forecast
+# registry: data/registry.db
+# provider: local
+# offline_store:
+#   type: feast.infra.offline_stores.sqlite.SQLiteOfflineStore
+#   path: data/feast_offline_store.db
+# online_store:
+#   type: sqlite
+#   path: data/feast_online_store.db
+project: demand_forecasting
+registry: data/registry.db
+provider: local
+online_store:
     type: sqlite
-    path: data/feast_offline_store.OfflineStore
+    path: data/online_store.db

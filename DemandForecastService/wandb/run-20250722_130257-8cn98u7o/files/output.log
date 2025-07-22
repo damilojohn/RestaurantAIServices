@@ -1,0 +1,67 @@
+INFO:ml_pipeline.orchestrator:Starting training pipeline
+INFO:ml_pipeline.extractor:Loading Orders and OrderDetails as DataFrames...
+INFO:ml_pipeline.extractor:Extracted data successfully
+INFO:ml_pipeline.extractor:                                     Id  ...  order_date
+0  0086f603-c118-4ff4-bcca-6e1480413363  ...  2025-07-01
+1  1517200a-e53b-470d-a7c4-a34830ccc9e0  ...  2025-07-15
+2  17c56774-0086-466f-ab9f-e0a07afc3960  ...  2025-06-29
+3  25b2effb-b716-4e9c-b60a-b85c480bb1f3  ...  2025-07-12
+4  25dceac3-7639-49c5-b65f-7b25d7469d5e  ...  2025-06-29
+
+[5 rows x 22 columns]
+INFO:ml_pipeline.extractor:Index(['restaurant_id', 'item_id', 'order_date', 'total_quantity_ordered',
+       'avg_unit_price', 'day_of_week', 'is_weekend'],
+      dtype='object')
+INFO:ml_pipeline.preprocessor:Starting feature engineering
+ERROR:ml_pipeline.orchestrator:Training pipeline failed: "Column(s) ['order_id', 'quantity', 'total_amount'] do not exist"
+[31mERROR[0m:    Traceback (most recent call last):
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/starlette/routing.py", line 694, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/fastapi/routing.py", line 134, in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+               ~~~~~~~~~~~~~~~~^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/main.py", line 29, in lifespan
+    orchestrator.run_training_pipeline()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/ml_pipeline/orchestrator.py", line 41, in run_training_pipeline
+    features = self.feature_engineer.create_features(df)
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/ml_pipeline/preprocessor.py", line 34, in create_features
+    ]).agg({
+       ~~~^^
+        'quantity': 'sum',
+        ^^^^^^^^^^^^^^^^^^
+        'total_amount': 'sum',
+        ^^^^^^^^^^^^^^^^^^^^^^
+        'order_id': 'nunique'
+        ^^^^^^^^^^^^^^^^^^^^^
+    }).reset_index()
+    ^^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/pandas/core/groupby/generic.py", line 1432, in aggregate
+    result = op.agg()
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/pandas/core/apply.py", line 190, in agg
+    return self.agg_dict_like()
+           ~~~~~~~~~~~~~~~~~~^^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/pandas/core/apply.py", line 423, in agg_dict_like
+    return self.agg_or_apply_dict_like(op_name="agg")
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/pandas/core/apply.py", line 1603, in agg_or_apply_dict_like
+    result_index, result_data = self.compute_dict_like(
+                                ~~~~~~~~~~~~~~~~~~~~~~^
+        op_name, selected_obj, selection, kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/pandas/core/apply.py", line 462, in compute_dict_like
+    func = self.normalize_dictlike_arg(op_name, selected_obj, func)
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/pandas/core/apply.py", line 663, in normalize_dictlike_arg
+    raise KeyError(f"Column(s) {list(cols)} do not exist")
+KeyError: "Column(s) ['order_id', 'quantity', 'total_amount'] do not exist"
+
+[31mERROR[0m:    Application startup failed. Exiting.
