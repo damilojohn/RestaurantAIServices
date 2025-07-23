@@ -10,6 +10,7 @@ from api.endpoints import router as api_router
 
 from ml_pipeline.notification_service import manager
 from ml_pipeline.orchestrator import MLPipelineOrchestrator
+from ml_pipeline.notification_service import router as ws_router
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -26,10 +27,11 @@ async def lifespan(app: FastAPI) -> AsyncIterator:
     # orchestrator_thread = threading.Thread(target=orchestrator.run, daemon=True)
     # orchestrator_thread.start()
 
-    orchestrator.run_training_pipeline()
+    latest_model = orchestrator.run_training_pipeline()
 
     try:
         LOG.info("API Started.....")
+        await orchestrator.run_prediction_pipeline(latest_model)
 
         yield
     
@@ -52,7 +54,7 @@ app.add_middleware(
 )
 
 app.include_router(api_router, prefix="/api", tags=["api"])
-
+app.include_router(ws_router, prefix="/api", tags=["notification service"])
 # WebSocket endpoint
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
@@ -81,4 +83,4 @@ async def websocket_endpoint(websocket: WebSocket):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8080, log_level="info")
+    uvicorn.run(app, host="0.0.0.0", port=54300, log_level="info")

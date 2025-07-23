@@ -35,7 +35,7 @@ manager = ConnectionManager()
 
 # WebSocket endpoints
 router = APIRouter(
-    prefix="",
+    prefix="/notification",
     tags=["websocket", "AI Services"]
 )
 

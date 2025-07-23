@@ -74,13 +74,13 @@ class XGBoostTrainer:
             wandb.log(metrics)
             
             # Log model
-            mlflow.sklearn.log_model(
+            model_info = mlflow.sklearn.log_model(
                 self.model,
-                "model",
+                # "model",
                 input_example=X_train[:5],
-                registered_model_name="demand_forecasting_xgb"
+                name = "demand_forecast_xgb",
             )
             
             logger.info(f"Model trained - Test MAE: {test_mae:.2f}, Test RMSE: {test_rmse:.2f}")
             
-            return self.model, metrics
+            return model_info

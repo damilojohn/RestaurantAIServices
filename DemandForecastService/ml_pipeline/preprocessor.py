@@ -20,47 +20,53 @@ class FeatureEngineer:
         df['order_date'] = pd.to_datetime(df['order_date'])
         df = df.sort_values('order_date')
         
-        # Create additional time-based features
-        df['hour'] = df['order_date'].dt.hour
-        df['day_of_month'] = df['order_date'].dt.day
-        df['month'] = df['order_date'].dt.month
-        # day_of_week and is_weekend already exist
+        # Extract date (strip time) and store in a new column
+        df['date'] = df['order_date'].dt.date
+        df['date'] = pd.to_datetime(df['date'])  # Ensure it's datetime64
         
         # Aggregate daily demand per item per restaurant
         daily_demand = df.groupby(
-            ['restaurant_id', 'item_id', df['order_date'].dt.date], as_index=False
+            ['restaurant_id', 'item_id', 'date'], as_index=False
         ).agg(
             daily_demand=('quantity', 'sum'),
             avg_unit_price=('unit_price', 'mean')
         )
-        daily_demand = daily_demand.rename(columns={'order_date': 'date'})
-        daily_demand['date'] = pd.to_datetime(daily_demand['order_date'])
-        daily_demand = daily_demand.drop(columns=['order_date'], errors='ignore')
         
-        # Lag features
+        # Sort for time-based features
         daily_demand = daily_demand.sort_values(['restaurant_id', 'item_id', 'date'])
+        
+        # Create lag features
         for lag in [1, 2, 3, 7, 14]:
-            daily_demand[f'demand_lag_{lag}'] = daily_demand.groupby(['restaurant_id', 'item_id'])['daily_demand'].shift(lag)
+            daily_demand[f'demand_lag_{lag}'] = (
+                daily_demand.groupby(['restaurant_id', 'item_id'])['daily_demand'].shift(lag)
+            )
         
-        # Rolling statistics
+        # Create rolling window features
         for window in [3, 7, 14]:
-            daily_demand[f'demand_rolling_mean_{window}'] = (
-                daily_demand.groupby(['restaurant_id', 'item_id'])['daily_demand']
-                .rolling(window, min_periods=1).mean().reset_index(0, drop=True)
+            rolling = (
+                daily_demand
+                .groupby(['restaurant_id', 'item_id'])['daily_demand']
+                .rolling(window, min_periods=1)
+                .agg(['mean', 'std'])
+                .reset_index(level=[0, 1], drop=True)
             )
-            daily_demand[f'demand_rolling_std_{window}'] = (
-                daily_demand.groupby(['restaurant_id', 'item_id'])['daily_demand']
-                .rolling(window, min_periods=1).std().reset_index(0, drop=True)
-            )
-        
-        # Item stats
+            daily_demand[f'demand_rolling_mean_{window}'] = rolling['mean']
+            daily_demand[f'demand_rolling_std_{window}'] = rolling['std'].fillna(0)
+
+        # Item-level stats (global)
         item_stats = df.groupby('item_id').agg({
             'quantity': ['mean', 'std', 'count'],
             'unit_price': 'mean'
         }).reset_index()
-        item_stats.columns = ['item_id', 'item_avg_quantity', 'item_std_quantity', 'item_total_orders', 'item_avg_price']
+        item_stats.columns = [
+            'item_id',
+            'item_avg_quantity',
+            'item_std_quantity',
+            'item_total_orders',
+            'item_avg_price'
+        ]
         
-        # Restaurant stats
+        # Restaurant-level stats (global)
         restaurant_stats = df.groupby('restaurant_id').agg({
             'quantity': 'sum'
         }).reset_index()
@@ -70,17 +76,17 @@ class FeatureEngineer:
         features = daily_demand.merge(item_stats, on='item_id', how='left')
         features = features.merge(restaurant_stats, on='restaurant_id', how='left')
         
-        # Add temporal features
-        features['date'] = pd.to_datetime(features['date'])
+        # Temporal features (for seasonality modeling)
         features['day_of_week'] = features['date'].dt.dayofweek
         features['month'] = features['date'].dt.month
         features['is_weekend'] = features['day_of_week'].isin([5, 6]).astype(int)
         
-        # Fill missing values
+        # Fill missing values in features
         features = features.fillna(0)
         
         logger.info(f"Created {len(features)} feature rows with {len(features.columns)} columns")
         return features
+
     
     # def create_features(self, df):
     #     """Create features for demand forecasting"""

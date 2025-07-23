@@ -16,16 +16,16 @@ class DemandPredictor:
         self.db_url = db_url
         self.engine = create_engine(db_url)
         self.Session = sessionmaker(bind=self.engine)
+        self.model = None
         
         mlflow.set_tracking_uri(mlflow_uri)
-        # self.model = self._load_model()
     
-    def _load_model(self):
+    def _load_model(self, model_info):
         """Load model from MLflow"""
         try:
-            model = mlflow.xgboost.load_model(f"models:/{self.model_name}/Production")
+            self.model = mlflow.xgboost.load_model(model_info.model_uri)
             logger.info("Model loaded successfully from MLflow")
-            return model
+            return self.model
         except Exception as e:
             logger.error(f"Failed to load model: {e}")
             return None

@@ -23,7 +23,7 @@ class MLPipelineOrchestrator:
         self.predictor = DemandPredictor(
             Config.MLFLOW_TRACKING_URI, 
             Config.MODEL_NAME,
-            Config.PREDICTIONS_DB_URL
+            Config.PREDICTIONS_DB_URL,
         )
     
     def run_training_pipeline(self):
@@ -41,24 +41,24 @@ class MLPipelineOrchestrator:
             features = self.feature_engineer.create_features(df)
             
             # 3. Store features
-            self.feature_store._setup_feature_store()
-            self.feature_store.store_features(features)
+            # self.feature_store._setup_feature_store()
+            # self.feature_store.store_features(features)
             
             # 4. Prepare training data
             X, y, feature_cols = self.feature_engineer.prepare_training_data(features)
             
             # 5. Train model
-            model, metrics = self.trainer.train(X, y, feature_cols)
-            
-            logger.info("Training pipeline completed successfully")
+            model_info = self.trainer.train(X, y, feature_cols)
+            return model_info
             
         except Exception as e:
             logger.error(f"Training pipeline failed: {e}")
             raise
     
-    def run_prediction_pipeline(self):
+    async def run_prediction_pipeline(self, latest_model_info):
         """Run daily prediction pipeline"""
         logger.info("Starting prediction pipeline")
+        self.predictor._load_model(latest_model_info)
         
         try:
             # Get all restaurants and items (simplified)
@@ -81,7 +81,7 @@ class MLPipelineOrchestrator:
             self.predictor.store_predictions(all_predictions)
             
             # Notify dashboard
-            asyncio.run(notify_new_predictions(all_predictions))
+            await notify_new_predictions(all_predictions)
             
             logger.info(f"Prediction pipeline completed. Generated {len(all_predictions)} predictions")
             
@@ -94,7 +94,7 @@ class MLPipelineOrchestrator:
         schedule.every().tuesday.at("02:00").do(self.run_training_pipeline)
         
         # Generate predictions daily
-        schedule.every().day.at("01:00").do(self.run_prediction_pipeline)
+        schedule.every().hour.at("01:00").do(self.run_prediction_pipeline)
         
         logger.info("Pipeline jobs scheduled")
     

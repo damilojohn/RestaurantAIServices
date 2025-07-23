@@ -1,9 +1,0 @@
-{"time":"2025-07-22T12:44:04.910706+01:00","level":"INFO","msg":"stream: starting","core version":"0.21.0"}
-{"time":"2025-07-22T12:44:05.546482+01:00","level":"INFO","msg":"stream: created new stream","id":"zxonc07u"}
-{"time":"2025-07-22T12:44:05.546541+01:00","level":"INFO","msg":"stream: started","id":"zxonc07u"}
-{"time":"2025-07-22T12:44:05.546578+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"zxonc07u"}
-{"time":"2025-07-22T12:44:05.546883+01:00","level":"INFO","msg":"handler: started","stream_id":"zxonc07u"}
-{"time":"2025-07-22T12:44:05.546923+01:00","level":"INFO","msg":"sender: started","stream_id":"zxonc07u"}
-{"time":"2025-07-22T12:44:19.062936+01:00","level":"INFO","msg":"stream: closing","id":"zxonc07u"}
-{"time":"2025-07-22T12:44:19.712994+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
-{"time":"2025-07-22T12:45:21.455731+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/damilojohn/RestaurantDemandForecasting/zxonc07u/file_stream\": dial tcp 35.186.228.49:443: connect: operation timed out"}

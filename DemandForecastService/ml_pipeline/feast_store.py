@@ -40,16 +40,16 @@ class FeastFeatureStore:
         # Define feature view
         self.demand_features = FeatureView(
             name="demand_features",
-            entities=["restaurant_id", "item_id"],
+            entities=[self.item_entity, self.restaurant_entity],
             features=[
-                Feature(name="demand_lag_1", dtype=Float32),
-                Feature(name="demand_lag_7", dtype=Float32),
-                Feature(name="demand_rolling_mean_7", dtype=Float32),
-                Feature(name="demand_rolling_std_7", dtype=Float32),
-                Feature(name="item_avg_quantity", dtype=Float32),
-                Feature(name="restaurant_avg_revenue", dtype=Float32),
-                Feature(name="day_of_week", dtype=Int64),
-                Feature(name="is_weekend", dtype=Int64),
+                Feature(name="demand_lag_1", dtype=ValueType.FLOAT),
+                Feature(name="demand_lag_7", dtype=ValueType.FLOAT),
+                Feature(name="demand_rolling_mean_7", dtype=ValueType.FLOAT),
+                Feature(name="demand_rolling_std_7", dtype=ValueType.FLOAT),
+                Feature(name="item_avg_quantity", dtype=ValueType.FLOAT),
+                Feature(name="restaurant_avg_revenue", dtype=ValueType.FLOAT),
+                Feature(name="day_of_week", dtype=ValueType.INT64),
+                Feature(name="is_weekend", dtype=ValueType.INT64)
             ],
             source=FileSource(
                 path=f"{self.repo_path}/data/data.csv",
