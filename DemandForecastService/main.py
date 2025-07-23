@@ -11,11 +11,13 @@ from api.endpoints import router as api_router
 from ml_pipeline.notification_service import manager
 from ml_pipeline.orchestrator import MLPipelineOrchestrator
 from ml_pipeline.notification_service import router as ws_router
+from ml_pipeline.config import Config
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 LOG = structlog.stdlib.get_logger()
+config = Config
 
 
 @asynccontextmanager
@@ -23,10 +25,11 @@ async def lifespan(app: FastAPI) -> AsyncIterator:
     LOG.info("AI API starting.....")
     
     orchestrator = MLPipelineOrchestrator()
+    LOG.info("ML pipeline orchestrator instantiated....")
 
     # orchestrator_thread = threading.Thread(target=orchestrator.run, daemon=True)
     # orchestrator_thread.start()
-
+    LOG.info("Instantiating training pipeline....")
     latest_model = orchestrator.run_training_pipeline()
 
     try:
@@ -66,21 +69,7 @@ async def websocket_endpoint(websocket: WebSocket):
     except WebSocketDisconnect:
         manager.disconnect(websocket)
 
-# @app.on_event("startup")
-# def on_startup():
-#     """Initialize services on startup"""
-#     logger.info("Starting Restaurant AI Service")
-    
-#     # Start ML pipeline orchestrator in background
-#     orchestrator = MLPipelineOrchestrator()
-    
-#     # Run orchestrator in separate thread
-#     orchestrator_thread = threading.Thread(target=orchestrator.run, daemon=True)
-#     orchestrator_thread.start()
-    
-#     logger.info("ML Pipeline orchestrator started")
-
-
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=54300, log_level="info")
+    LOG.info(f"Starting server on port {config.PORT}")
+    uvicorn.run(app, host=config.HOST, port=config.PORT, log_level="info")

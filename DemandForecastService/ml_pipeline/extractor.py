@@ -11,12 +11,14 @@ logger = logging.getLogger(__name__)
 class DataExtractor:
     def __init__(self):
         self.engine = create_engine_from_url(Config.RAW_DB_URL)
-        self.orm_mappings = get_tables(self.engine)
+        # self.orm_mappings = get_tables(self.engine)
         self.repo_path = Config.FEAST_REPO_PATH
+
+        logger.info("Extractor instantiated")
     
     def extract_orders(self, start_date, end_date):
-        Orders = self.orm_mappings["Orders"]
-        OrderDetails = self.orm_mappings["OrderDetails"]
+        # Orders = self.orm_mappings["Orders"]
+        # OrderDetails = self.orm_mappings["OrderDetails"]
         logger.info("Loading Orders and OrderDetails as DataFrames...")
 
         # Load tables as DataFrames

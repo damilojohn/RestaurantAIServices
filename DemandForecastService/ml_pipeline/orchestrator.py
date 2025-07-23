@@ -17,14 +17,19 @@ logger = logging.getLogger(__name__)
 class MLPipelineOrchestrator:
     def __init__(self):
         self.extractor = DataExtractor()
+        logger.info("Instantiated Data Extraction")
         self.feature_engineer = FeatureEngineer()
+        logger.info("Instantiated Feature preprocessor...")
         self.feature_store = FeastFeatureStore(Config.FEAST_REPO_PATH)
+        logger.info("Instantiated Feature Store....")
         self.trainer = XGBoostTrainer(Config.MLFLOW_TRACKING_URI, Config.WANDB_PROJECT, Config.WANDB_API_KEY)
+        logger.info("Instantiated Trainer...")
         self.predictor = DemandPredictor(
             Config.MLFLOW_TRACKING_URI, 
             Config.MODEL_NAME,
             Config.PREDICTIONS_DB_URL,
         )
+        logger.info("Instantiated predictor.....")
     
     def run_training_pipeline(self):
         """Run complete training pipeline"""

@@ -4,17 +4,21 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class Config:
+    HOST = "127.0.0.1"
+    PORT = 54300
     # Database connections
-    RAW_DB_URL = (
-    "mssql+pyodbc://hobwiseuser:Khadilac6363%25@mssql-198211-0.cloudclusters.net:10297/EnterpriseDB"
-    "?driver=ODBC+Driver+17+for+SQL+Server"
-    "&Encrypt=yes"
-    "&TrustServerCertificate=yes"
-    "&Connection+Timeout=30"
-    )
+    # RAW_DB_URL = (
+    # "mssql+pyodbc://hobwiseuser:Khadilac6363%25@mssql-198211-0.cloudclusters.net:10297/EnterpriseDB"
+    # "?driver=ODBC+Driver+17+for+SQL+Server"
+    # "&Encrypt=yes"
+    # "&TrustServerCertificate=yes"
+    # "&Connection+Timeout=30"
+    # )
 
-    FEATURE_DB_URL = os.getenv("FEATURE_DB_URL", "postgresql://user:password@localhost/restaurant_features")
-    PREDICTIONS_DB_URL = os.getenv("PREDICTIONS_DB_URL", "postgresql://user:password@localhost/restaurant_predictions")
+    RAW_DB_URL = os.getenv("RAW_DB_URL")
+
+    FEATURE_DB_URL = os.getenv("FEATURE_DB_URL")
+    PREDICTIONS_DB_URL = os.getenv("PREDICTIONS_DB_URL")
     
     # Feature Store
     FEAST_REPO_PATH = os.getenv("FEAST_REPO_PATH", "./feature_store")

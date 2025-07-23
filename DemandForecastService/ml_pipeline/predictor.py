@@ -23,7 +23,7 @@ class DemandPredictor:
     def _load_model(self, model_info):
         """Load model from MLflow"""
         try:
-            self.model = mlflow.xgboost.load_model(model_info.model_uri)
+            self.model = mlflow.sklearn.load_model(model_info.model_uri)
             logger.info("Model loaded successfully from MLflow")
             return self.model
         except Exception as e:
