@@ -13,4 +13,5 @@ wheels/
 mlartifacts
 mlruns/
 wandb/
+ml_pipeline/notebooks
 .env
