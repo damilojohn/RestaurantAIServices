@@ -1,7 +1,8 @@
 # data_ingestion/extractor.py
 import pandas as pd
+import numpy as np
 from .models import get_tables
-from .utils import create_engine_from_url, get_session_factory
+from .utils import create_engine_from_url, get_session_factory, LOG
 from .config import Config
 import logging
 
@@ -9,69 +10,99 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class DataExtractor:
-    def __init__(self):
+    def __init__(self, num_stores, num_items):
         self.engine = create_engine_from_url(Config.RAW_DB_URL)
         # self.orm_mappings = get_tables(self.engine)
         self.repo_path = Config.FEAST_REPO_PATH
+        self.num_stores = num_stores
+        self.num_items = num_items
 
-        logger.info("Extractor instantiated")
+        LOG.info("Extractor instantiated")
     
     def extract_orders(self, start_date, end_date):
-        # Orders = self.orm_mappings["Orders"]
-        # OrderDetails = self.orm_mappings["OrderDetails"]
-        logger.info("Loading Orders and OrderDetails as DataFrames...")
-
-        # Load tables as DataFrames
-        orders_df = pd.read_sql_table("Orders", self.engine)
-        order_details_df = pd.read_sql_table("OrderDetails", self.engine)
-        logger.info("Extracted data successfully")
-        # Ensure start_date and end_date are datetime.date objects
-        start_date = start_date.date() if hasattr(start_date, 'date') else start_date
-        end_date = end_date.date() if hasattr(end_date, 'date') else end_date
-
-        # Filter orders by date
-        orders_df['order_date'] = pd.to_datetime(orders_df['DateCreated']).dt.date
-        filtered_orders = orders_df[(orders_df['order_date'] >= start_date) & (orders_df['order_date'] <= end_date)]
-
-        # Join in pandas
-        merged_df = pd.merge(
-            filtered_orders,
-            order_details_df,
-            left_on='Id',
-            right_on='OrderID',
-            how='inner'
+        # Use synthetic data for now. Later we would actually pull from Henry's DB
+        synthetic_data = self._generate_synthetic_data(
+            start_date,
+            end_date,
+            self.num_stores,
+            self.num_items
         )
+        LOG.info(f"✅ Created {len(synthetic_data):,} sales transactions")
+        LOG.info(f"📈 Average daily sales per SKU: {synthetic_data['sales'].mean():.1f} units")
+        LOG.info(f"📊 Sales volume range: {synthetic_data['sales'].min()} to {synthetic_data['sales'].max()} units/day")
+        return synthetic_data
 
-        # Build records for downstream processing
-        records = []
-        for _, row in merged_df.iterrows():
-            records.append({
-                'order_date': row['order_date'],
-                'restaurant_id': row['BusinessID'],
-                'item_id': row['ItemID'],
-                'quantity': row['Quantity'],
-                'unit_price': row['UnitPrice']
-            })
-        df = pd.DataFrame(records)
 
-        # Aggregate demand per restaurant, item, and day
-        # agg_df = df.groupby(
-        #     ['restaurant_id', 'item_id', 'order_date'], as_index=False
-        # ).agg(
-        #     total_quantity_ordered=('quantity', 'sum'),
-        #     avg_unit_price=('unit_price', 'mean')
-        # )
-
-        # Add datepart features
-        df['day_of_week'] = pd.to_datetime(df['order_date']).dt.dayofweek
-        df['is_weekend'] = df['day_of_week'] >= 5
-        logger.info(df.columns)
-
-        return df
+    def _generate_synthetic_data(self, start_date, end_date, num_stores, num_items):
+        """
+        Generate realistic synthetic sales data with multiple patterns
+        
+        Returns:
+            pd.DataFrame: Sales data with columns [date, store, item, sales]
+        """
+        date_range = pd.date_range(start=start_date, end=end_date, freq='D')
+        
+        data = []
+        np.random.seed(42)  # For reproducible results
+        
+        print(f"🛒 Simulating {len(date_range)} days of retail operations across {num_stores} stores")
+        
+        for store in range(1, num_stores + 1):
+            # Store characteristics
+            store_size_factor = np.random.uniform(0.7, 1.3)  # Some stores are bigger
+            store_location_factor = np.random.normal(1.0, 0.2)  # Location effects
+            
+            for item in range(1, num_items + 1):
+                # Item characteristics
+                base_demand = np.random.normal(100, 30) * store_size_factor
+                item_popularity = np.random.uniform(0.5, 2.0)  # Some items more popular
+                
+                for date in date_range:
+                    # Seasonal patterns (yearly cycle)
+                    day_of_year = date.timetuple().tm_yday
+                    seasonal = 30 * np.sin(2 * np.pi * day_of_year / 365.25) * item_popularity
+                    
+                    # Weekly patterns (higher demand on weekends)
+                    weekly = 15 if date.weekday() >= 5 else 0
+                    
+                    # Holiday effects (increased demand around major holidays)
+                    month_day = (date.month, date.day)
+                    holiday_boost = 0
+                    if month_day in [(12, 25), (1, 1), (7, 4), (11, 24)]:  # Major holidays
+                        holiday_boost = 50
+                    elif date.month == 12 and date.day > 15:  # Holiday season
+                        holiday_boost = 25
+                    
+                    # Growth trend (business expanding over time)
+                    days_since_start = (date - pd.to_datetime(start_date)).days
+                    trend = 0.02 * days_since_start * store_location_factor
+                    
+                    # Random noise (real-world variation)
+                    noise = np.random.normal(0, 15)
+                    
+                    # Calculate final sales (ensure non-negative)
+                    sales = max(0, int(
+                        base_demand + 
+                        seasonal + 
+                        weekly + 
+                        holiday_boost + 
+                        trend + 
+                        noise
+                    ))
+                    
+                    data.append({
+                        'date': date,
+                        'store': store,
+                        'item': item,
+                        'sales': sales
+                    })
+        
+        return pd.DataFrame(data)
+        
     
     def extract_orders_raw_sql(self, start_date, end_date):
         """Extract orders using raw SQL for better performance"""
-        logger.info(f"Extracting orders with raw SQL from {start_date} to {end_date}")
+        LOG.info(f"Extracting orders with raw SQL from {start_date} to {end_date}")
         
         sql_query = """
         SELECT 
@@ -97,7 +128,7 @@ class DataExtractor:
                 params=[start_date, end_date],
                 parse_dates=['order_date']
             )
-            logger.info(f"Extracted {len(df)} order items using raw SQL")
+            LOG.info(f"Extracted {len(df)} order items using raw SQL")
             return df
             
         except Exception as e:

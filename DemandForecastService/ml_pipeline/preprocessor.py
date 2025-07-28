@@ -1,192 +1,221 @@
+# import pandas as pd
+# import numpy as np
+# from datetime import datetime, timedelta
+# from sklearn.preprocessing import StandardScaler, LabelEncoder
+# import json
+
+import os
+import logging
 import pandas as pd
 import numpy as np
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import col, count, max as spark_max, min as spark_min, current_timestamp
+from pyspark.sql.types import StructType, StructField, DateType, DoubleType, IntegerType, LongType, StringType, TimestampType
 from datetime import datetime, timedelta
-from sklearn.preprocessing import StandardScaler, LabelEncoder
-import json
-import logging
+import warnings
+from .utils import LOG
 
+os.environ["JAVA_HOME"] = "/opt/homebrew/opt/openjdk@17"
+
+warnings.filterwarnings('ignore')
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class FeatureEngineer:
     def __init__(self):
-        self.scaler = StandardScaler()
-        self.label_encoders = {}
-    
-
-    def create_features(self, df):
-        logger.info("Starting feature engineering")
-        
-        # Ensure datetime and sort
-        df['order_date'] = pd.to_datetime(df['order_date'])
-        df = df.sort_values('order_date')
-        
-        # Extract date (strip time) and store in a new column
-        df['date'] = df['order_date'].dt.date
-        df['date'] = pd.to_datetime(df['date'])  # Ensure it's datetime64
-        
-        # Aggregate daily demand per item per restaurant
-        daily_demand = df.groupby(
-            ['restaurant_id', 'item_id', 'date'], as_index=False
-        ).agg(
-            daily_demand=('quantity', 'sum'),
-            avg_unit_price=('unit_price', 'mean')
+        self.spark = SparkSession.builder.getOrCreate()
+        self.db_name = "forecasting"
+        # self.scaler = StandardScaler()
+        # self.label_encoders = {}
+        self.spark.sql(f"CREATE DATABASE IF NOT EXISTS {self.db_name};")
+        self.spark.sql(f"""CREATE TABLE IF NOT EXISTS {self.db_name}.raw_sales_data(
+        date DATE COMMENT 'Sales transaction date',
+        store INT COMMENT 'Store location identifier',
+        item INT COMMENT 'Product SKU identifier',
+        sales BIGINT COMMENT 'Daily units sold',
+        processing_timestamp TIMESTAMP COMMENT 'Data processing timestamp'
         )
-        
-        # Sort for time-based features
-        daily_demand = daily_demand.sort_values(['restaurant_id', 'item_id', 'date'])
-        
-        # Create lag features
-        for lag in [1, 2, 3, 7, 14]:
-            daily_demand[f'demand_lag_{lag}'] = (
-                daily_demand.groupby(['restaurant_id', 'item_id'])['daily_demand'].shift(lag)
-            )
-        
-        # Create rolling window features
-        for window in [3, 7, 14]:
-            rolling = (
-                daily_demand
-                .groupby(['restaurant_id', 'item_id'])['daily_demand']
-                .rolling(window, min_periods=1)
-                .agg(['mean', 'std'])
-                .reset_index(level=[0, 1], drop=True)
-            )
-            daily_demand[f'demand_rolling_mean_{window}'] = rolling['mean']
-            daily_demand[f'demand_rolling_std_{window}'] = rolling['std'].fillna(0)
+        """)
+        self.spark.sql(f"""
+        CREATE TABLE IF NOT EXISTS {self.db_name}.forecast_results (
+        store INT COMMENT 'Store location identifier',
+        item INT COMMENT 'Product SKU identifier', 
+        forecast_date DATE COMMENT 'Future date for demand prediction',
+        yhat DOUBLE COMMENT 'Predicted demand (units)',
+        yhat_lower DOUBLE COMMENT 'Lower demand estimate (95% confidence)',
+        yhat_upper DOUBLE COMMENT 'Upper demand estimate (95% confidence)',
+        model_version STRING COMMENT 'Forecasting model version',
+        created_timestamp TIMESTAMP COMMENT 'Forecast generation timestamp'
+        )
+        COMMENT 'Demand forecasts with confidence intervals for inventory planning'
+        """)
 
-        # Item-level stats (global)
-        item_stats = df.groupby('item_id').agg({
-            'quantity': ['mean', 'std', 'count'],
-            'unit_price': 'mean'
-        }).reset_index()
-        item_stats.columns = [
-            'item_id',
-            'item_avg_quantity',
-            'item_std_quantity',
-            'item_total_orders',
-            'item_avg_price'
-        ]
+        LOG.info("✅ Retail data tables ready for forecasting")
         
-        # Restaurant-level stats (global)
-        restaurant_stats = df.groupby('restaurant_id').agg({
-            'quantity': 'sum'
-        }).reset_index()
-        restaurant_stats.columns = ['restaurant_id', 'restaurant_total_quantity']
-        
-        # Merge all features
-        features = daily_demand.merge(item_stats, on='item_id', how='left')
-        features = features.merge(restaurant_stats, on='restaurant_id', how='left')
-        
-        # Temporal features (for seasonality modeling)
-        features['day_of_week'] = features['date'].dt.dayofweek
-        features['month'] = features['date'].dt.month
-        features['is_weekend'] = features['day_of_week'].isin([5, 6]).astype(int)
-        
-        # Fill missing values in features
-        features = features.fillna(0)
-        
-        logger.info(f"Created {len(features)} feature rows with {len(features.columns)} columns")
-        return features
+    def create_features(self, df):
+        schema = StructType([
+        StructField("date", DateType(), True),
+        StructField("store", IntegerType(), True),
+        StructField("item", IntegerType(), True),
+        StructField("sales", LongType(), True),
+        StructField("processing_timestamp", TimestampType(), True)
+        ])
+        df_clean = df.copy()
 
+# Convert date column to proper date type (remove time component)
+        df_clean['date'] = pd.to_datetime(df_clean['date']).dt.date
+
+        # Ensure integer types are exactly what we need
+        df_clean['store'] = df_clean['store'].astype('int32')
+        df_clean['item'] = df_clean['item'].astype('int32') 
+        df_clean['sales'] = df_clean['sales'].astype('int64')
+
+        df_clean['processing_timestamp'] = None
+
+        LOG.info(f"📋 Data types: {df_clean.dtypes.to_dict()}")
+
+        # Create Spark DataFrame using explicit schema to prevent type inference issues
+        synthetic_spark_df = self.spark.createDataFrame(df_clean, schema=schema)
+
+        # Add processing timestamp
+        final_df = synthetic_spark_df.withColumn(
+            "processing_timestamp", 
+            current_timestamp()
+        )
+
+        # Verify schema matches exactly
+        LOG.info("🔍 Final DataFrame schema:")
+        final_df.printSchema()
+        LOG.info(f"💾 Writing to: {self.db_name}.raw_sales_data")
+        final_df.write.mode("overwrite").saveAsTable(
+            f"{self.db_name}.raw_sales_data"
+        )
+
+        LOG.info(f"✅ Sales history loaded successfully!")
+        LOG.info(f"📊 Rows written: {final_df.count():,}")
     
-    # def create_features(self, df):
-    #     """Create features for demand forecasting"""
-    #     logger.info("Starting feature engineering")
-        
-    #     # Sort by date
-    #     df = df.sort_values('order_date')
-    #     logger.info(df.columns)
-    #     df['order_date'] = pd.to_datetime(df['order_date'])
-        
-    #     # Create time-based features
-    #     df['hour'] = df['order_date'].dt.hour
-    #     df['day_of_week'] = df['order_date'].dt.dayofweek
-    #     df['day_of_month'] = df['order_date'].dt.day
-    #     df['month'] = df['order_date'].dt.month
-    #     df['is_weekend'] = df['day_of_week'].isin([5, 6]).astype(int)
-        
-    #     # Aggregate daily demand per item per restaurant
-    #     daily_demand = df.groupby(
-    #         ['restaurant_id', 'item_id', 'order_date'], as_index=False
-    #     ).agg(
-    #         total_quantity_ordered=('quantity', 'sum'),
-    #         avg_unit_price=('unit_price', 'mean')
-    #     )
-    #     # daily_demand = df.groupby([
-    #     #     'restaurant_id', 'item_id', 
-    #     #     df['order_date'].dt.date
-    #     # ]).agg({
-    #     #     'quantity': 'sum',
-    #     #     'total_amount': 'sum',
-    #     #     'order_id': 'nunique'
-    #     # }).reset_index()
-        
-    #     daily_demand.columns = ['restaurant_id', 'item_id', 'date', 'daily_demand', 'daily_revenue', 'daily_orders']
-        
-    #     # Create lag features
-    #     daily_demand = daily_demand.sort_values(['restaurant_id', 'item_id', 'date'])
-        
-    #     for lag in [1, 2, 3, 7, 14]:
-    #         daily_demand[f'demand_lag_{lag}'] = daily_demand.groupby(['restaurant_id', 'item_id'])['daily_demand'].shift(lag)
-        
-    #     # Rolling statistics
-    #     for window in [3, 7, 14]:
-    #         daily_demand[f'demand_rolling_mean_{window}'] = daily_demand.groupby(['restaurant_id', 'item_id'])['daily_demand'].rolling(window, min_periods=1).mean().reset_index(0, drop=True)
-    #         daily_demand[f'demand_rolling_std_{window}'] = daily_demand.groupby(['restaurant_id', 'item_id'])['daily_demand'].rolling(window, min_periods=1).std().reset_index(0, drop=True)
-        
-    #     # Item popularity features
-    #     item_stats = df.groupby('item_id').agg({
-    #         'quantity': ['mean', 'std', 'count'],
-    #         'unit_price': 'mean'
-    #     }).reset_index()
-        
-    #     item_stats.columns = ['item_id', 'item_avg_quantity', 'item_std_quantity', 'item_total_orders', 'item_avg_price']
-        
-    #     # Restaurant features
-    #     restaurant_stats = df.groupby('restaurant_id').agg({
-    #         'total_amount': 'mean',
-    #         'order_id': 'nunique'
-    #     }).reset_index()
-        
-    #     restaurant_stats.columns = ['restaurant_id', 'restaurant_avg_revenue', 'restaurant_total_orders']
-        
-    #     # Merge all features
-    #     features = daily_demand.merge(item_stats, on='item_id', how='left')
-    #     features = features.merge(restaurant_stats, on='restaurant_id', how='left')
-        
-    #     # Add temporal features
-    #     features['date'] = pd.to_datetime(features['date'])
-    #     features['day_of_week'] = features['date'].dt.dayofweek
-    #     features['month'] = features['date'].dt.month
-    #     features['is_weekend'] = features['day_of_week'].isin([5, 6]).astype(int)
-        
-    #     # Fill missing values
-    #     features = features.fillna(0)
-        
-    #     logger.info(f"Created {len(features)} feature rows with {len(features.columns)} columns")
-    #     return features
+    def print_data_quality_report(self):
+        raw_table = f"{self.db_name}.raw_sales_data"
+        df = self.spark.table(raw_table)
+
+        LOG.info("🔍 Data Quality Report:")
+        LOG.info("=" * 50)
+
+        # Basic statistics
+        row_count = df.count()
+        date_min = df.select(spark_min('date')).collect()[0][0]
+        date_max = df.select(spark_max('date')).collect()[0][0]
+        store_count = df.select('store').distinct().count()
+        item_count = df.select('item').distinct().count()
+
+        LOG.info(f"📊 Total records: {row_count:,}")
+        LOG.info(f"📅 Date range: {date_min} to {date_max}")
+        LOG.info(f"🏪 Unique stores: {store_count}")
+        LOG.info(f"📦 Unique items: {item_count}")
+
+        # Data completeness check
+        null_checks = df.select([
+            count(col('date')).alias('total_dates'),
+            count(col('store')).alias('total_stores'), 
+            count(col('item')).alias('total_items'),
+            count(col('sales')).alias('total_sales')
+        ]).collect()[0]
+
+        LOG.info(f"✅ Completeness: {null_checks['total_sales']:,} sales records (100% complete)")
+
+        # Statistical summary
+        sales_stats = df.select('sales').describe().collect()
+        for row in sales_stats:
+            LOG.info(f"📈 Sales {row['summary']}: {float(row['sales']):.2f}")
+
+        LOG.info("\n🎯 Retail sales data validated and ready for demand forecasting!")
     
-    def prepare_training_data(self, features):
-        """Prepare data for XGBoost training"""
+    def prepare_training_data(self):
+        LOG.info("📥 Loading retail sales history for AI analysis...")
+
+        # Load historical sales data
+        raw_table = f"{self.db_name}.raw_sales_data"
+        df = self.spark.table(raw_table)
+
+        LOG.info(f"✅ Sales data ready for analysis")
+        LOG.info(f"🛒 Total sales transactions: {df.count():,}")
+
+        # Data quality summary
+        date_range = df.select(spark_min('date'), spark_max('date')).collect()[0]
+        LOG.info(f"📅 Date range: {date_range[0]} to {date_range[1]}")
+        LOG.info(f"🏪 Stores: {df.select('store').distinct().count()}")
+        LOG.info(f"📦 Items: {df.select('item').distinct().count()}")
+
+        LOG.info("🔍 Analyzing sales patterns for AI model training...")
+        MAX_STORES = 5    # Match data generation: stores 1-5
+        MAX_ITEMS = 15
+        FORECAST_HORIZON_DAYS = 15  # Reduced from 30 for faster processing
+        MIN_HISTORY_DAYS = 90
+        # Check data completeness for selected store-item combinations
+        validation_df = (
+            df.filter(col("store") <= MAX_STORES)
+            .filter(col("item") <= MAX_ITEMS)
+            .groupBy("store", "item")
+            .agg(
+                count("*").alias("record_count"),
+                spark_min("date").alias("start_date"),
+                spark_max("date").alias("end_date")
+            )
+        )
+
+        validation_results = validation_df.collect()
+
+        LOG.info(f"📈 Analyzing {len(validation_results)} store-item combinations:")
+
+        sufficient_data_count = 0
+        for row in validation_results:
+            days_of_data = (row['end_date'] - row['start_date']).days + 1
+            sufficient = days_of_data >= MIN_HISTORY_DAYS
+            if sufficient:
+                sufficient_data_count += 1
+            
+            status = "✅" if sufficient else "❌"
+            LOG.info(f"   {status} Store {row['store']}, Item {row['item']}: {row['record_count']} records, {days_of_data} days")
+
+        LOG.info(f"\n🎯 {sufficient_data_count}/{len(validation_results)} product-store combinations ready for AI forecasting")
+
+        available_combinations = (
+        df.select("store", "item")
+        .distinct()
+        .collect()
+        )
+
+        LOG.info(f"🎯 Discovered {len(available_combinations)} store-item combinations in data")
+
+        # Create forecast results storage
+        all_forecasts = []
+
+        # Process each combination individually for better error handling
+        for i, row in enumerate(available_combinations):
+            store_id = row['store']
+            item_id = row['item']
+            
+            try:
+                # Filter data for this specific store-item combination
+                store_item_data = (
+                    df.filter((col("store") == store_id) & (col("item") == item_id))
+                    .select("date", "sales")
+                    .orderBy("date")
+                    .toPandas()
+                )
+                
+                # Check if we have enough data
+                if len(store_item_data) < MIN_HISTORY_DAYS:
+                    LOG.info(f"⚠️  Store {store_id}, Item {item_id}: Only {len(store_item_data)} days (need {MIN_HISTORY_DAYS})")
+                    continue
+                    
+                # Prepare data for Prophet
+                prophet_df = store_item_data.rename(columns={'date': 'ds', 'sales': 'y'})
+                prophet_df['ds'] = pd.to_datetime(prophet_df['ds'])
+                prophet_df = prophet_df.sort_values('ds').drop_duplicates(subset=['ds'])
+
+                return prophet_df
+            except Exception as e:
+                LOG.info(f"Training data preparation failed with error ..{e}")
+                raise
         
-        # Select feature columns
-        feature_cols = [col for col in features.columns if col not in ['restaurant_id', 'item_id', 'date', 'daily_demand']]
-        
-        # Encode categorical variables
-        categorical_cols = ['restaurant_id', 'item_id']
-        
-        for col in categorical_cols:
-            if col in features.columns:
-                if col not in self.label_encoders:
-                    self.label_encoders[col] = LabelEncoder()
-                features[f'{col}_encoded'] = self.label_encoders[col].fit_transform(features[col])
-                feature_cols.append(f'{col}_encoded')
-        
-        # Prepare X and y
-        X = features[feature_cols]
-        y = features['daily_demand']
-        
-        # Scale features
-        X_scaled = self.scaler.fit_transform(X)
-        X_scaled = pd.DataFrame(X_scaled, columns=feature_cols)
-        
-        return X_scaled, y, feature_cols

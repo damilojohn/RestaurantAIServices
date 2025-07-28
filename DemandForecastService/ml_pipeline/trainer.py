@@ -1,15 +1,17 @@
 import xgboost as xgb
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error
+from prophet import Prophet
 import mlflow
-import mlflow.xgboost
+import mlflow.prophet
 import wandb
 import numpy as np
 import logging
+from .utils import LOG
 
 logger = logging.getLogger(__name__)
 
-class XGBoostTrainer:
+class ProphetTrainer:
     def __init__(self, mlflow_uri, wandb_project, wandb_api_key):
         self.mlflow_uri = mlflow_uri
         self.wandb_project = wandb_project
@@ -17,56 +19,46 @@ class XGBoostTrainer:
         
         # Setup MLflow
         mlflow.set_tracking_uri(mlflow_uri)
-        mlflow.set_experiment("restaurants_demand_forecasting_test_1")
+        mlflow.set_experiment("restaurants_demand_forecasting_test_2")
         
         # Setup Weights & Biases
         wandb.login(key=wandb_api_key)
-        wandb.init(project=wandb_project, name="xgboost_training")
+        wandb.init(project=wandb_project, name="DemandForecasting")
     
-    def train(self, X, y, feature_cols):
+    def train(self, df):
         """Train XGBoost model"""
         logger.info("Starting model training")
         
-        # Split data
-        X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=0.2, random_state=42
-        )
         
+        CONFIDENCE_INTERVAL = 0.95
         # XGBoost parameters
         params = {
-            'objective': 'reg:squarederror',
-            'max_depth': 6,
-            'learning_rate': 0.1,
-            'n_estimators': 100,
-            'subsample': 0.8,
-            'colsample_bytree': 0.8,
-            'random_state': 42
+            "Daily_seasonality":"True",
+            "weekly_seasonality": "True",
+            "yearly_seasonality":"True",
+            "interval_width" : CONFIDENCE_INTERVAL,
+            "changepoint_prior_scale": 0.05,
+            "seasonality_prior_scale":10.0
+
         }
-        
         # Log parameters
         wandb.config.update(params)
         
         with mlflow.start_run():
             # Train model
-            self.model = xgb.XGBRegressor(**params)
-            self.model.fit(X_train, y_train)
-            
-            # Predictions
-            y_pred_train = self.model.predict(X_train)
-            y_pred_test = self.model.predict(X_test)
-            
-            # Calculate metrics
-            train_mae = mean_absolute_error(y_train, y_pred_train)
-            test_mae = mean_absolute_error(y_test, y_pred_test)
-            train_rmse = np.sqrt(mean_squared_error(y_train, y_pred_train))
-            test_rmse = np.sqrt(mean_squared_error(y_test, y_pred_test))
+            self.model = Prophet(
+                daily_seasonality=True,
+                weekly_seasonality=True,
+                yearly_seasonality=True,
+                interval_width=CONFIDENCE_INTERVAL,
+                changepoint_prior_scale=0.05,
+                seasonality_prior_scale=10.0
+            )
+            self.model.fit(df)
+            logging.getLogger('prophet').setLevel(logging.WARNING)
             
             # Log metrics
             metrics = {
-                'train_mae': train_mae,
-                'test_mae': test_mae,
-                'train_rmse': train_rmse,
-                'test_rmse': test_rmse
             }
             
             mlflow.log_params(params)
@@ -74,13 +66,14 @@ class XGBoostTrainer:
             wandb.log(metrics)
             
             # Log model
-            model_info = mlflow.sklearn.log_model(
+            model_info = mlflow.prophet.log_model(
                 self.model,
                 # "model",
-                input_example=X_train[:5],
-                name = "demand_forecast_xgb",
+                input_example=df[:5],
+                name = "demand_forecast_prophet",
             )
+            # model_path = mlflow.prophet.save_model(self.model, "./prophet_model")
             
-            logger.info(f"Model trained - Test MAE: {test_mae:.2f}, Test RMSE: {test_rmse:.2f}")
+            LOG.info(f"Model Trained successfully....")
             
             return model_info

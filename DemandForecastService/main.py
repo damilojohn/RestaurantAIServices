@@ -30,11 +30,11 @@ async def lifespan(app: FastAPI) -> AsyncIterator:
     # orchestrator_thread = threading.Thread(target=orchestrator.run, daemon=True)
     # orchestrator_thread.start()
     LOG.info("Instantiating training pipeline....")
-    latest_model = orchestrator.run_training_pipeline()
+    model_info = orchestrator.run_training_pipeline()
 
     try:
         LOG.info("API Started.....")
-        await orchestrator.run_prediction_pipeline(latest_model)
+        await orchestrator.run_prediction_pipeline(model_info)
 
         yield
     

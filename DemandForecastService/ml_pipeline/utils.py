@@ -4,8 +4,10 @@ from .models import get_tables
 from .config import Config
 import logging
 import urllib.parse
+import structlog
 
 logger = logging.getLogger(__name__)
+LOG = structlog.stdlib.get_logger()
 
 def create_engine_from_url(db_url):
     """Create SQLAlchemy engine with proper configuration for MySQL or MSSQL."""
