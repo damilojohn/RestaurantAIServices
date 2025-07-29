@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/172950535453927258/ef3a5e1977314beba2b7cf2a3506db5d/artifacts
+end_time: 1753778813929
+entry_point_name: ''
+experiment_id: '172950535453927258'
+lifecycle_stage: active
+run_id: ef3a5e1977314beba2b7cf2a3506db5d
+run_name: delightful-bat-607
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753778811029
+status: 3
+tags: []
+user_id: onyekachiobute

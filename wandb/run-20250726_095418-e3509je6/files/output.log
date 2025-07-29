@@ -1,0 +1,154 @@
+INFO:ml_pipeline.orchestrator:Instantiated Trainer...
+[31mERROR[0m:    Traceback (most recent call last):
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/sqlalchemy/engine/default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.InsufficientPrivilege: permission denied for schema public
+LINE 2: CREATE TABLE forecasts (
+                     ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/starlette/routing.py", line 694, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/fastapi/routing.py", line 134, in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+               ~~~~~~~~~~~~~~~~^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/fastapi/routing.py", line 134, in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+               ~~~~~~~~~~~~~~~~^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/main.py", line 27, in lifespan
+    orchestrator = MLPipelineOrchestrator()
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/ml_pipeline/orchestrator.py", line 27, in __init__
+    self.predictor = DemandPredictor(
+                     ~~~~~~~~~~~~~~~^
+        Config.MLFLOW_TRACKING_URI,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        Config.MODEL_NAME,
+        ^^^^^^^^^^^^^^^^^^
+        Config.PREDICTIONS_DB_URL,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/ml_pipeline/predictor.py", line 26, in __init__
+    Base.metadata.create_all(bind=self.engine)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/sqlalchemy/sql/schema.py", line 5924, in create_all
+    bind._run_ddl_visitor(
+    ~~~~~~~~~~~~~~~~~~~~~^
+        ddl.SchemaGenerator, self, checkfirst=checkfirst, tables=tables
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 3248, in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 2455, in _run_ddl_visitor
+    ).traverse_single(element)
+      ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/sqlalchemy/sql/visitors.py", line 664, in traverse_single
+    return meth(obj, **kw)
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/sqlalchemy/sql/ddl.py", line 982, in visit_metadata
+    self.traverse_single(
+    ~~~~~~~~~~~~~~~~~~~~^
+        table,
+        ^^^^^^
+    ...<2 lines>...
+        _is_metadata_operation=True,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/sqlalchemy/sql/visitors.py", line 664, in traverse_single
+    return meth(obj, **kw)
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/sqlalchemy/sql/ddl.py", line 1020, in visit_table
+    )._invoke_with(self.connection)
+      ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/sqlalchemy/sql/ddl.py", line 321, in _invoke_with
+    return bind.execute(self)
+           ~~~~~~~~~~~~^^^^^^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/sqlalchemy/sql/ddl.py", line 187, in _execute_on_connection
+    return connection._execute_ddl(
+           ~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1526, in _execute_ddl
+    ret = self._execute_context(
+        dialect,
+    ...<4 lines>...
+        compiled,
+    )
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/sqlalchemy/engine/default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.InsufficientPrivilege) permission denied for schema public
+LINE 2: CREATE TABLE forecasts (
+                     ^
+
+[SQL:
+CREATE TABLE forecasts (
+	id SERIAL NOT NULL,
+	created_at TIMESTAMP WITHOUT TIME ZONE,
+	store INTEGER,
+	item INTEGER,
+	forecast_date DATE,
+	yhat FLOAT,
+	yhat_lower FLOAT,
+	yhat_upper FLOAT,
+	model_version VARCHAR,
+	PRIMARY KEY (id)
+)
+
+]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+
+[31mERROR[0m:    Application startup failed. Exiting.

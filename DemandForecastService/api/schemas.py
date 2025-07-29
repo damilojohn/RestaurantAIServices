@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List, Optional, Dict, Union
+from typing import List, Optional, Dict, Union, Any
 from datetime import datetime, date
 
 
@@ -9,6 +9,12 @@ class ItemDemand(BaseModel):
     forecasted_quantity: int
     confidence_score: float
     trend: str  # "increasing", "decreasing", "stable"
+
+class Forecast(BaseModel):
+    item_id: int
+    forecast_date: Any
+    predicted_demand: float
+    yhat_lower: float
 
 
 class DemandForecastRequest(BaseModel):
@@ -20,7 +26,7 @@ class DemandForecastRequest(BaseModel):
 
 class DemandForecastResponse(BaseModel):
     restaurant_id: str
-    forecast_period: Dict[str, Union[str, int]]  # start_date, end_date
+    # forecast_period: Dict[str, Union[str, int]]  # start_date, end_date
     total_items_forecasted: int
-    predictions: List[ItemDemand]
+    predictions: List[Forecast]
     generated_at: datetime

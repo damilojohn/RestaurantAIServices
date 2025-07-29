@@ -1,33 +1,11 @@
-# from fastapi import APIRouter
-# from .schemas import DemandForecastRequest, DemandForecastResponse
-# from .service import predict_demand
 
-
-# router = APIRouter()
-
-
-# @router.get("/health")
-# def health_check():
-#     return {"status": "ok"}
-
-
-# @router.post("/demandforecast/predict",
-#              response_model=DemandForecastResponse)
-# def predict(data: DemandForecastRequest) -> DemandForecastResponse:
-#     """
-#     Predict demand based on the provided data.
-#     """
-#     # Placeholder for actual prediction logic
-#     # This should call the model and return the prediction
-#     return DemandForecastResponse(prediction="Sample Prediction")
-
-
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from .schemas import DemandForecastRequest, DemandForecastResponse
-from .service import predict_demand as predict_demand_service
+from .service import _get_demand_forecast
+from .db import get_db_session
 
 
-router = APIRouter()
+router = APIRouter(prefix="/ai")
 
 
 @router.get("/health")
@@ -52,13 +30,18 @@ def predict_demand_endpoint(data: DemandForecastRequest) -> DemandForecastRespon
         raise HTTPException(status_code=500, detail=f"Prediction failed: {str(e)}")
 
 
-@router.get("/demandforecast/menu")
-def get_menu_items():
-    """Get available menu items for forecasting"""
-    from .service import model
-    return {
-        "items": [
-            {"item_id": item_id, "item_name": name} 
-            for item_id, name in model.menu_items.items()
-        ]
-    }
+@router.get("/demandforecast/predict", response_model=DemandForecastResponse)
+def get_demand_forecast(restaurant_id: str, db_session = Depends(get_db_session)) -> DemandForecastResponse:
+    """Get latest demand forecasts for all items in a restaurant
+    Args:
+        restaurant_id : Restaurant ID in Orders Table
+
+    Returns:
+        DemandForecastObject
+    """
+    try:
+
+        return _get_demand_forecast(db_session, restaurant_id)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"failed to get forecasts with error {e}")
+

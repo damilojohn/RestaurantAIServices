@@ -1,23 +1,29 @@
 import threading
+from typing import TypedDict
 import logging
 import structlog
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from api.endpoints import router as api_router
 
-from ml_pipeline.notification_service import manager
+from api.endpoints import router as api_router
+from api.db import _create_engine, DB_CONN_STRING, create_session, Engine, SessionMaker
+
+
 from ml_pipeline.orchestrator import MLPipelineOrchestrator
-from ml_pipeline.notification_service import router as ws_router
 from ml_pipeline.config import Config
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 LOG = structlog.stdlib.get_logger()
-config = Config
+config = Config()
+
+class State(TypedDict):
+    engine: Engine
+    sessionmaker: SessionMaker
 
 
 @asynccontextmanager
@@ -27,16 +33,23 @@ async def lifespan(app: FastAPI) -> AsyncIterator:
     orchestrator = MLPipelineOrchestrator()
     LOG.info("ML pipeline orchestrator instantiated....")
 
-    # orchestrator_thread = threading.Thread(target=orchestrator.run, daemon=True)
-    # orchestrator_thread.start()
+    # # orchestrator_thread = threading.Thread(target=orchestrator.run, daemon=True)
+    # # orchestrator_thread.start()
     LOG.info("Instantiating training pipeline....")
     model_info = orchestrator.run_training_pipeline()
+
+    engine = _create_engine(DB_CONN_STRING)
+    sessionmaker = create_session(engine)
+    app.state.sessionmaker = sessionmaker
 
     try:
         LOG.info("API Started.....")
         await orchestrator.run_prediction_pipeline(model_info)
 
-        yield
+        yield {
+            "engine":engine,
+            "sessionmaker":sessionmaker
+        }
     
     finally:
         LOG.info("API Shutting down .....")
@@ -57,17 +70,7 @@ app.add_middleware(
 )
 
 app.include_router(api_router, prefix="/api", tags=["api"])
-app.include_router(ws_router, prefix="/api", tags=["notification service"])
-# WebSocket endpoint
-@app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    await manager.connect(websocket)
-    try:
-        while True:
-            data = await websocket.receive_text()
-            await manager.send_personal_message(f"Echo: {data}", websocket)
-    except WebSocketDisconnect:
-        manager.disconnect(websocket)
+
 
 if __name__ == "__main__":
     import uvicorn

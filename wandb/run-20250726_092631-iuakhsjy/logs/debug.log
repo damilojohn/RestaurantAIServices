@@ -1,0 +1,23 @@
+2025-07-26 09:26:31,494 INFO    MainThread:76940 [wandb_setup.py:_flush():80] Current SDK version is 0.21.0
+2025-07-26 09:26:31,494 INFO    MainThread:76940 [wandb_setup.py:_flush():80] Configure stats pid to 76940
+2025-07-26 09:26:31,494 INFO    MainThread:76940 [wandb_setup.py:_flush():80] Loading settings from /Users/onyekachiobute/.config/wandb/settings
+2025-07-26 09:26:31,494 INFO    MainThread:76940 [wandb_setup.py:_flush():80] Loading settings from /Users/onyekachiobute/Documents/RestaurantAIServices/wandb/settings
+2025-07-26 09:26:31,495 INFO    MainThread:76940 [wandb_setup.py:_flush():80] Loading settings from environment variables
+2025-07-26 09:26:31,495 INFO    MainThread:76940 [wandb_init.py:setup_run_log_directory():703] Logging user logs to /Users/onyekachiobute/Documents/RestaurantAIServices/wandb/run-20250726_092631-iuakhsjy/logs/debug.log
+2025-07-26 09:26:31,495 INFO    MainThread:76940 [wandb_init.py:setup_run_log_directory():704] Logging internal logs to /Users/onyekachiobute/Documents/RestaurantAIServices/wandb/run-20250726_092631-iuakhsjy/logs/debug-internal.log
+2025-07-26 09:26:31,495 INFO    MainThread:76940 [wandb_init.py:init():830] calling init triggers
+2025-07-26 09:26:31,495 INFO    MainThread:76940 [wandb_init.py:init():835] wandb.init called with sweep_config: {}
+config: {'_wandb': {}}
+2025-07-26 09:26:31,495 INFO    MainThread:76940 [wandb_init.py:init():871] starting backend
+2025-07-26 09:26:32,051 INFO    MainThread:76940 [wandb_init.py:init():874] sending inform_init request
+2025-07-26 09:26:32,097 INFO    MainThread:76940 [wandb_init.py:init():882] backend started and connected
+2025-07-26 09:26:32,120 INFO    MainThread:76940 [wandb_init.py:init():953] updated telemetry
+2025-07-26 09:26:32,161 INFO    MainThread:76940 [wandb_init.py:init():977] communicating run to backend with 90.0 second timeout
+2025-07-26 09:26:33,623 INFO    MainThread:76940 [wandb_init.py:init():1029] starting run threads in backend
+2025-07-26 09:26:34,969 INFO    MainThread:76940 [wandb_run.py:_console_start():2458] atexit reg
+2025-07-26 09:26:34,970 INFO    MainThread:76940 [wandb_run.py:_redirect():2306] redirect: wrap_raw
+2025-07-26 09:26:34,971 INFO    MainThread:76940 [wandb_run.py:_redirect():2375] Wrapping output streams.
+2025-07-26 09:26:34,972 INFO    MainThread:76940 [wandb_run.py:_redirect():2398] Redirects installed.
+2025-07-26 09:26:34,983 INFO    MainThread:76940 [wandb_init.py:init():1075] run started, returning control to user process
+2025-07-26 09:26:50,804 INFO    MainThread:76940 [wandb_run.py:_config_callback():1363] config_cb None None {'Daily_seasonality': 'True', 'weekly_seasonality': 'True', 'yearly_seasonality': 'True', 'interval_width': 0.95, 'changepoint_prior_scale': 0.05, 'seasonality_prior_scale': 10.0}
+2025-07-26 09:45:42,596 INFO    MsgRouterThr:76940 [mailbox.py:close():129] [no run ID] Closing mailbox, abandoning 1 handles.

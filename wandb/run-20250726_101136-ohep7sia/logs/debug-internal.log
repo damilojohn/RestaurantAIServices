@@ -1,0 +1,36 @@
+{"time":"2025-07-26T10:11:37.175836+01:00","level":"INFO","msg":"stream: starting","core version":"0.21.0"}
+{"time":"2025-07-26T10:11:38.172065+01:00","level":"INFO","msg":"stream: created new stream","id":"ohep7sia"}
+{"time":"2025-07-26T10:11:38.172124+01:00","level":"INFO","msg":"stream: started","id":"ohep7sia"}
+{"time":"2025-07-26T10:11:38.172169+01:00","level":"INFO","msg":"handler: started","stream_id":"ohep7sia"}
+{"time":"2025-07-26T10:11:38.172231+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"ohep7sia"}
+{"time":"2025-07-26T10:11:38.172538+01:00","level":"INFO","msg":"sender: started","stream_id":"ohep7sia"}
+{"time":"2025-07-26T10:21:19.553662+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-07-26T10:21:51.601141+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": read tcp 172.20.10.3:51915->35.186.228.49:443: read: can't assign requested address"}
+{"time":"2025-07-26T10:21:56.316855+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T10:22:05.658416+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T10:22:22.043295+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T10:23:01.655028+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T10:23:06.239566+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/damilojohn/RestaurantDemandForecasting/ohep7sia/file_stream\": read tcp 172.20.10.3:53048->35.186.228.49:443: read: can't assign requested address"}
+{"time":"2025-07-26T10:23:08.511959+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/damilojohn/RestaurantDemandForecasting/ohep7sia/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T10:23:12.759849+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/damilojohn/RestaurantDemandForecasting/ohep7sia/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T10:23:22.42498+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/damilojohn/RestaurantDemandForecasting/ohep7sia/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T10:23:40.829094+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/damilojohn/RestaurantDemandForecasting/ohep7sia/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T10:24:01.658964+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T10:24:13.341916+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/damilojohn/RestaurantDemandForecasting/ohep7sia/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T11:20:31.625469+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T11:20:43.300227+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/damilojohn/RestaurantDemandForecasting/ohep7sia/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T11:51:48.983784+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T11:52:00.645764+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/damilojohn/RestaurantDemandForecasting/ohep7sia/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T12:08:02.875788+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T12:08:14.525862+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/damilojohn/RestaurantDemandForecasting/ohep7sia/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T12:25:53.703297+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T12:29:36.22524+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/damilojohn/RestaurantDemandForecasting/ohep7sia/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T12:46:16.081927+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T12:46:27.71176+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/damilojohn/RestaurantDemandForecasting/ohep7sia/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T13:04:47.218374+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T13:04:58.84683+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/damilojohn/RestaurantDemandForecasting/ohep7sia/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T13:30:35.24597+01:00","level":"WARN","msg":"sender: taking a long time","seconds":600.003171208,"work":"WorkRecord(*service_go_proto.Request_StopStatus); Control(local:true  mailbox_slot:\"s13pa97m8i4l\"  connection_id:\"1\")"}
+{"time":"2025-07-26T14:31:35.122393+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T15:32:36.212293+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/damilojohn/RestaurantDemandForecasting/ohep7sia/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T16:11:15.213613+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T16:11:26.83372+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/damilojohn/RestaurantDemandForecasting/ohep7sia/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}

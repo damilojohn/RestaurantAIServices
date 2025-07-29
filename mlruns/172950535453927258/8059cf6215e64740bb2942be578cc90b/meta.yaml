@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/172950535453927258/8059cf6215e64740bb2942be578cc90b/artifacts
+end_time: 1753777079688
+entry_point_name: ''
+experiment_id: '172950535453927258'
+lifecycle_stage: active
+run_id: 8059cf6215e64740bb2942be578cc90b
+run_name: thundering-tern-699
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753777077023
+status: 3
+tags: []
+user_id: onyekachiobute

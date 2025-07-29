@@ -1,0 +1,15 @@
+{"time":"2025-07-26T09:54:18.724821+01:00","level":"INFO","msg":"stream: starting","core version":"0.21.0"}
+{"time":"2025-07-26T09:54:18.852983+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T09:54:21.081977+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T09:54:25.390877+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2025-07-26T09:54:36.005037+01:00","level":"INFO","msg":"stream: created new stream","id":"e3509je6"}
+{"time":"2025-07-26T09:54:36.005342+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"e3509je6"}
+{"time":"2025-07-26T09:54:36.005369+01:00","level":"INFO","msg":"stream: started","id":"e3509je6"}
+{"time":"2025-07-26T09:54:36.005726+01:00","level":"INFO","msg":"sender: started","stream_id":"e3509je6"}
+{"time":"2025-07-26T09:54:36.00576+01:00","level":"INFO","msg":"handler: started","stream_id":"e3509je6"}
+{"time":"2025-07-26T09:54:43.351499+01:00","level":"INFO","msg":"stream: closing","id":"e3509je6"}
+{"time":"2025-07-26T09:54:44.240317+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-26T09:54:45.140363+01:00","level":"INFO","msg":"sender: closed","stream_id":"e3509je6"}
+{"time":"2025-07-26T09:54:45.141292+01:00","level":"INFO","msg":"handler: closed","stream_id":"e3509je6"}
+{"time":"2025-07-26T09:54:45.1413+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"e3509je6"}
+{"time":"2025-07-26T09:54:45.141373+01:00","level":"INFO","msg":"stream: closed","id":"e3509je6"}

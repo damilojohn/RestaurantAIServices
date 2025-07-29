@@ -1,0 +1,64 @@
+_wandb:
+    value:
+        cli_version: 0.21.0
+        e:
+            hy7n4uyjfki1zkqa27vpdfv2mjsj4rvf:
+                apple:
+                    ecpuCores: 4
+                    gpuCores: 7
+                    memoryGb: 8
+                    name: Apple M1
+                    pcpuCores: 4
+                    ramTotalBytes: "8589934592"
+                    swapTotalBytes: "7516192768"
+                codePath: DemandForecastService/main.py
+                codePathLocal: DemandForecastService/main.py
+                cpu_count: 8
+                cpu_count_logical: 8
+                disk:
+                    /:
+                        total: "245107195904"
+                        used: "148254519296"
+                email: oduguwadamilola40@gmail.com
+                executable: /Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/bin/python3.13
+                git:
+                    commit: ef8af92c2ed7d751f5ab9f1b16722390b66c1f4e
+                    remote: https://github.com/damilojohn/RestaurantAIServices.git
+                host: Damilolas-Macbook-Air.local
+                memory:
+                    total: "8589934592"
+                os: macOS-15.0-arm64-arm-64bit-Mach-O
+                program: /Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/main.py
+                python: CPython 3.13.5
+                root: /Users/onyekachiobute/Documents/RestaurantAIServices
+                startedAt: "2025-07-26T08:26:31.484045Z"
+                writerId: hy7n4uyjfki1zkqa27vpdfv2mjsj4rvf
+        m: []
+        python_version: 3.13.5
+        t:
+            "1":
+                - 5
+                - 6
+                - 53
+            "2":
+                - 5
+                - 6
+                - 53
+            "3":
+                - 13
+            "4": 3.13.5
+            "5": 0.21.0
+            "12": 0.21.0
+            "13": darwin-arm64
+Daily_seasonality:
+    value: "True"
+changepoint_prior_scale:
+    value: 0.05
+interval_width:
+    value: 0.95
+seasonality_prior_scale:
+    value: 10
+weekly_seasonality:
+    value: "True"
+yearly_seasonality:
+    value: "True"

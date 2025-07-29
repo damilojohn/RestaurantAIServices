@@ -1,0 +1,6 @@
+artifact_location: mlflow-artifacts:/172950535453927258
+creation_time: 1753777051145
+experiment_id: '172950535453927258'
+last_update_time: 1753777051145
+lifecycle_stage: active
+name: restaurants_demand_forecasting_test_2

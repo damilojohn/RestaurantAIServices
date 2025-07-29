@@ -1,0 +1,227 @@
+INFO:ml_pipeline.orchestrator:Instantiated Trainer...
+INFO:ml_pipeline.orchestrator:Instantiated predictor.....
+[2m2025-07-26 09:26:35[0m [[32m[1minfo     [0m] [1mML pipeline orchestrator instantiated....[0m
+[2m2025-07-26 09:26:35[0m [[32m[1minfo     [0m] [1mInstantiating training pipeline....[0m
+INFO:ml_pipeline.orchestrator:Starting training pipeline
+🛒 Simulating 91 days of retail operations across 20 stores
+[2m2025-07-26 09:26:36[0m [[32m[1minfo     [0m] [1m✅ Created 36,400 sales transactions[0m
+[2m2025-07-26 09:26:36[0m [[32m[1minfo     [0m] [1m📈 Average daily sales per SKU: 115.1 units[0m
+[2m2025-07-26 09:26:36[0m [[32m[1minfo     [0m] [1m📊 Sales volume range: 0 to 330 units/day[0m
+[2m2025-07-26 09:26:36[0m [[32m[1minfo     [0m] [1m📋 Data types: {'date': dtype('O'), 'store': dtype('int32'), 'item': dtype('int32'), 'sales': dtype('int64'), 'processing_timestamp': dtype('O')}[0m
+[2m2025-07-26 09:26:36[0m [[32m[1minfo     [0m] [1m🔍 Final DataFrame schema:     [0m
+root
+ |-- date: date (nullable = true)
+ |-- store: integer (nullable = true)
+ |-- item: integer (nullable = true)
+ |-- sales: long (nullable = true)
+ |-- processing_timestamp: timestamp (nullable = false)
+
+[2m2025-07-26 09:26:36[0m [[32m[1minfo     [0m] [1m💾 Writing to: forecasting.raw_sales_data[0m
+[2m2025-07-26 09:26:42[0m [[32m[1minfo     [0m] [1m✅ Sales history loaded successfully![0m
+[2m2025-07-26 09:26:43[0m [[32m[1minfo     [0m] [1m📊 Rows written: 36,400        [0m
+[2m2025-07-26 09:26:43[0m [[32m[1minfo     [0m] [1m🔍 Data Quality Report:        [0m
+[2m2025-07-26 09:26:43[0m [[32m[1minfo     [0m] [1m==================================================[0m
+[2m2025-07-26 09:26:45[0m [[32m[1minfo     [0m] [1m📊 Total records: 36,400       [0m
+[2m2025-07-26 09:26:45[0m [[32m[1minfo     [0m] [1m📅 Date range: 2025-04-27 to 2025-07-26[0m
+[2m2025-07-26 09:26:45[0m [[32m[1minfo     [0m] [1m🏪 Unique stores: 20           [0m
+[2m2025-07-26 09:26:45[0m [[32m[1minfo     [0m] [1m📦 Unique items: 20            [0m
+/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/jupyter_client/connect.py:22: DeprecationWarning: Jupyter is migrating its paths to use standard platformdirs
+given by the platformdirs library.  To remove this warning and
+see the appropriate new directories, set the environment variable
+`JUPYTER_PLATFORM_DIRS=1` and then run `jupyter --paths`.
+The use of platformdirs will be the default in `jupyter_core` v6
+  from jupyter_core.paths import jupyter_data_dir, jupyter_runtime_dir, secure_write
+[2m2025-07-26 09:26:46[0m [[32m[1minfo     [0m] [1m✅ Completeness: 36,400 sales records (100% complete)[0m
+[2m2025-07-26 09:26:46[0m [[32m[1minfo     [0m] [1m📈 Sales count: 36400.00       [0m
+[2m2025-07-26 09:26:46[0m [[32m[1minfo     [0m] [1m📈 Sales mean: 115.07          [0m
+[2m2025-07-26 09:26:46[0m [[32m[1minfo     [0m] [1m📈 Sales stddev: 40.73         [0m
+[2m2025-07-26 09:26:46[0m [[32m[1minfo     [0m] [1m📈 Sales min: 0.00             [0m
+[2m2025-07-26 09:26:46[0m [[32m[1minfo     [0m] [1m📈 Sales max: 330.00           [0m
+[2m2025-07-26 09:26:46[0m [[32m[1minfo     [0m] [1m
+🎯 Retail sales data validated and ready for demand forecasting![0m
+[2m2025-07-26 09:26:46[0m [[32m[1minfo     [0m] [1m📥 Loading retail sales history for AI analysis...[0m
+[2m2025-07-26 09:26:46[0m [[32m[1minfo     [0m] [1m✅ Sales data ready for analysis[0m
+[2m2025-07-26 09:26:47[0m [[32m[1minfo     [0m] [1m🛒 Total sales transactions: 36,400[0m
+[2m2025-07-26 09:26:47[0m [[32m[1minfo     [0m] [1m📅 Date range: 2025-04-27 to 2025-07-26[0m
+[2m2025-07-26 09:26:47[0m [[32m[1minfo     [0m] [1m🏪 Stores: 20                  [0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m📦 Items: 20                   [0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m🔍 Analyzing sales patterns for AI model training...[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m📈 Analyzing 75 store-item combinations:[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 15: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 10: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 13: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 7: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 7: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 6: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 11: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 9: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 10: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 4: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 12: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 13: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 13: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 15: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 3: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 11: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 6: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 14: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 6: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 10: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 9: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 8: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 15: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 14: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 2: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 1: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 3: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 12: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 8: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 2: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 4: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 1: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 7: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 9: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 11: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 14: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 8: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 5: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 5: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 12: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 1: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 2: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 7: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 3: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 2: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 9: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 1: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 3: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 14: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 5: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 11: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 5: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 4: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 9: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 15: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 3: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 8: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 1: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 4: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 14: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 11: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 12: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 10: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 12: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 2: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 5: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 15: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 13: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 4: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 8: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 6: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 10: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 7: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 13: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 6: 91 records, 91 days[0m
+[2m2025-07-26 09:26:48[0m [[32m[1minfo     [0m] [1m
+🎯 75/75 product-store combinations ready for AI forecasting[0m
+[2m2025-07-26 09:26:49[0m [[32m[1minfo     [0m] [1m🎯 Discovered 400 store-item combinations in data[0m
+INFO:ml_pipeline.trainer:Starting model training
+DEBUG:cmdstanpy:input tempfile: /var/folders/t1/4k5475yj5b13x6zbbfjr5kj80000gn/T/tmpg5ze08e0/mb979dik.json
+DEBUG:cmdstanpy:input tempfile: /var/folders/t1/4k5475yj5b13x6zbbfjr5kj80000gn/T/tmpg5ze08e0/lo8kjqkr.json
+DEBUG:cmdstanpy:idx 0
+DEBUG:cmdstanpy:running CmdStan, num_threads: None
+DEBUG:cmdstanpy:CmdStan args: ['/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/prophet/stan_model/prophet_model.bin', 'random', 'seed=76647', 'data', 'file=/var/folders/t1/4k5475yj5b13x6zbbfjr5kj80000gn/T/tmpg5ze08e0/mb979dik.json', 'init=/var/folders/t1/4k5475yj5b13x6zbbfjr5kj80000gn/T/tmpg5ze08e0/lo8kjqkr.json', 'output', 'file=/var/folders/t1/4k5475yj5b13x6zbbfjr5kj80000gn/T/tmpg5ze08e0/prophet_model7uvfaco6/prophet_model-20250726092651.csv', 'method=optimize', 'algorithm=newton', 'iter=10000']
+09:26:51 - cmdstanpy - INFO - Chain [1] start processing
+INFO:cmdstanpy:Chain [1] start processing
+09:26:51 - cmdstanpy - INFO - Chain [1] done processing
+INFO:cmdstanpy:Chain [1] done processing
+/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/mlflow/models/model.py:421: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  self.utc_time_created = str(utc_time_created or datetime.utcnow())
+2025/07/26 09:26:53 WARNING mlflow.utils.environment: Failed to resolve installed pip version. ``pip`` will be added to conda.yaml environment spec without a version specifier.
+2025/07/26 09:26:53 INFO mlflow.models.model: Found the following environment variables used during model inference: [WANDB_API_KEY]. Please check if you need to set them when deploying the model. To disable this message, set environment variable `MLFLOW_RECORD_ENV_VARS_IN_MODEL_LOGGING` to `false`.
+[2m2025-07-26 09:26:53[0m [[32m[1minfo     [0m] [1mModel Trained successfully....[0m
+🏃 View run lyrical-frog-919 at: http://127.0.0.1:8000/#/experiments/292785914983623969/runs/50cf1552bd914e05b7e8fbce39e60785
+🧪 View experiment at: http://127.0.0.1:8000/#/experiments/292785914983623969
+[2m2025-07-26 09:26:53[0m [[32m[1minfo     [0m] [1mAPI Started.....              [0m
+INFO:ml_pipeline.orchestrator:Starting prediction pipeline
+<mlflow.models.model.ModelInfo object at 0x15c0aea50>
+Downloading artifacts: 100%|███████████████████| 8/8 [00:00<00:00, 136.08it/s]
+INFO:ml_pipeline.predictor:Model loaded successfully from MLflow
+INFO:ml_pipeline.orchestrator:model loaded....
+🎯 Discovered 400 store-item combinations in data
+📈 Processed 25/400 combinations...
+📈 Processed 50/400 combinations...
+📈 Processed 75/400 combinations...
+📈 Processed 100/400 combinations...
+📈 Processed 125/400 combinations...
+📈 Processed 150/400 combinations...
+📈 Processed 175/400 combinations...
+📈 Processed 200/400 combinations...
+📈 Processed 225/400 combinations...
+📈 Processed 250/400 combinations...
+📈 Processed 275/400 combinations...
+📈 Processed 300/400 combinations...
+📈 Processed 325/400 combinations...
+📈 Processed 350/400 combinations...
+📈 Processed 375/400 combinations...
+📈 Processed 400/400 combinations...
+✅ Forecasting complete! Generated predictions for 400 combinations
+🔮 Generated 6,000 individual demand predictions
+INFO:ml_pipeline.predictor:prediction storing failed.... with error (psycopg2.errors.UndefinedTable) relation "forecasts" does not exist
+LINE 1: INSERT INTO forecasts (store, item, forecast_date, yhat, yha...
+                    ^
+
+[SQL: INSERT INTO forecasts (store, item, forecast_date, yhat, yhat_lower, yhat_upper, model_version) VALUES (%(store__0)s, %(item__0)s, %(forecast_date__0)s, %(yhat__0)s, %(yhat_lower__0)s, %(yhat_upper__0)s, %(model_version__0)s), (%(store__1)s, %(item__ ... 136981 characters truncated ... recast_date__999)s, %(yhat__999)s, %(yhat_lower__999)s, %(yhat_upper__999)s, %(model_version__999)s)]
+[parameters: {'store__0': 10, 'model_version__0': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__0': 151.3090451647254, 'item__0': 2, 'yhat_lower__0': 95.5730059836083, 'forecast_date__0': datetime.date(2025, 7, 27), 'yhat__0': 124.77790655787271, 'store__1': 10, 'model_version__1': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__1': 131.5712664906447, 'item__1': 2, 'yhat_lower__1': 75.44428692947231, 'forecast_date__1': datetime.date(2025, 7, 28), 'yhat__1': 103.4432897621584, 'store__2': 10, 'model_version__2': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__2': 121.90097306912538, 'item__2': 2, 'yhat_lower__2': 68.86470464817553, 'forecast_date__2': datetime.date(2025, 7, 29), 'yhat__2': 95.33083244734028, 'store__3': 10, 'model_version__3': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__3': 111.11129430699386, 'item__3': 2, 'yhat_lower__3': 53.92524905889347, 'forecast_date__3': datetime.date(2025, 7, 30), 'yhat__3': 82.1508366840371, 'store__4': 10, 'model_version__4': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__4': 111.27380387733535, 'item__4': 2, 'yhat_lower__4': 54.29559265806223, 'forecast_date__4': datetime.date(2025, 7, 31), 'yhat__4': 82.73052225436544, 'store__5': 10, 'model_version__5': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__5': 109.56473803245063, 'item__5': 2, 'yhat_lower__5': 54.064956708123454, 'forecast_date__5': datetime.date(2025, 8, 1), 'yhat__5': 81.57453618817495, 'store__6': 10, 'model_version__6': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__6': 107.10172726572578, 'item__6': 2, 'yhat_lower__6': 53.229780818920744, 'forecast_date__6': datetime.date(2025, 8, 2), 'yhat__6': 79.94599808400271, 'store__7': 10 ... 6900 parameters truncated ... 'yhat__992': 95.33083244734028, 'store__993': 4, 'model_version__993': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__993': 109.28272244516657, 'item__993': 11, 'yhat_lower__993': 54.29438687124568, 'forecast_date__993': datetime.date(2025, 7, 30), 'yhat__993': 82.1508366840371, 'store__994': 4, 'model_version__994': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__994': 108.79232611981797, 'item__994': 11, 'yhat_lower__994': 53.05274660185908, 'forecast_date__994': datetime.date(2025, 7, 31), 'yhat__994': 82.73052225436544, 'store__995': 4, 'model_version__995': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__995': 108.47152567194576, 'item__995': 11, 'yhat_lower__995': 54.555391887996215, 'forecast_date__995': datetime.date(2025, 8, 1), 'yhat__995': 81.57453618817495, 'store__996': 4, 'model_version__996': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__996': 106.99943185779935, 'item__996': 11, 'yhat_lower__996': 53.63971487615064, 'forecast_date__996': datetime.date(2025, 8, 2), 'yhat__996': 79.94599808400271, 'store__997': 4, 'model_version__997': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__997': 107.29994177739258, 'item__997': 11, 'yhat_lower__997': 51.71633077338074, 'forecast_date__997': datetime.date(2025, 8, 3), 'yhat__997': 79.32880256243737, 'store__998': 4, 'model_version__998': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__998': 84.44655123667327, 'item__998': 11, 'yhat_lower__998': 31.781677698205268, 'forecast_date__998': datetime.date(2025, 8, 4), 'yhat__998': 58.17450006723327, 'store__999': 4, 'model_version__999': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__999': 77.32838969218825, 'item__999': 11, 'yhat_lower__999': 24.217585083765155, 'forecast_date__999': datetime.date(2025, 8, 5), 'yhat__999': 51.055166276521085}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+ERROR:ml_pipeline.orchestrator:Prediction pipeline failed: (psycopg2.errors.UndefinedTable) relation "forecasts" does not exist
+LINE 1: INSERT INTO forecasts (store, item, forecast_date, yhat, yha...
+                    ^
+
+[SQL: INSERT INTO forecasts (store, item, forecast_date, yhat, yhat_lower, yhat_upper, model_version) VALUES (%(store__0)s, %(item__0)s, %(forecast_date__0)s, %(yhat__0)s, %(yhat_lower__0)s, %(yhat_upper__0)s, %(model_version__0)s), (%(store__1)s, %(item__ ... 136981 characters truncated ... recast_date__999)s, %(yhat__999)s, %(yhat_lower__999)s, %(yhat_upper__999)s, %(model_version__999)s)]
+[parameters: {'store__0': 10, 'model_version__0': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__0': 151.3090451647254, 'item__0': 2, 'yhat_lower__0': 95.5730059836083, 'forecast_date__0': datetime.date(2025, 7, 27), 'yhat__0': 124.77790655787271, 'store__1': 10, 'model_version__1': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__1': 131.5712664906447, 'item__1': 2, 'yhat_lower__1': 75.44428692947231, 'forecast_date__1': datetime.date(2025, 7, 28), 'yhat__1': 103.4432897621584, 'store__2': 10, 'model_version__2': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__2': 121.90097306912538, 'item__2': 2, 'yhat_lower__2': 68.86470464817553, 'forecast_date__2': datetime.date(2025, 7, 29), 'yhat__2': 95.33083244734028, 'store__3': 10, 'model_version__3': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__3': 111.11129430699386, 'item__3': 2, 'yhat_lower__3': 53.92524905889347, 'forecast_date__3': datetime.date(2025, 7, 30), 'yhat__3': 82.1508366840371, 'store__4': 10, 'model_version__4': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__4': 111.27380387733535, 'item__4': 2, 'yhat_lower__4': 54.29559265806223, 'forecast_date__4': datetime.date(2025, 7, 31), 'yhat__4': 82.73052225436544, 'store__5': 10, 'model_version__5': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__5': 109.56473803245063, 'item__5': 2, 'yhat_lower__5': 54.064956708123454, 'forecast_date__5': datetime.date(2025, 8, 1), 'yhat__5': 81.57453618817495, 'store__6': 10, 'model_version__6': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__6': 107.10172726572578, 'item__6': 2, 'yhat_lower__6': 53.229780818920744, 'forecast_date__6': datetime.date(2025, 8, 2), 'yhat__6': 79.94599808400271, 'store__7': 10 ... 6900 parameters truncated ... 'yhat__992': 95.33083244734028, 'store__993': 4, 'model_version__993': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__993': 109.28272244516657, 'item__993': 11, 'yhat_lower__993': 54.29438687124568, 'forecast_date__993': datetime.date(2025, 7, 30), 'yhat__993': 82.1508366840371, 'store__994': 4, 'model_version__994': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__994': 108.79232611981797, 'item__994': 11, 'yhat_lower__994': 53.05274660185908, 'forecast_date__994': datetime.date(2025, 7, 31), 'yhat__994': 82.73052225436544, 'store__995': 4, 'model_version__995': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__995': 108.47152567194576, 'item__995': 11, 'yhat_lower__995': 54.555391887996215, 'forecast_date__995': datetime.date(2025, 8, 1), 'yhat__995': 81.57453618817495, 'store__996': 4, 'model_version__996': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__996': 106.99943185779935, 'item__996': 11, 'yhat_lower__996': 53.63971487615064, 'forecast_date__996': datetime.date(2025, 8, 2), 'yhat__996': 79.94599808400271, 'store__997': 4, 'model_version__997': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__997': 107.29994177739258, 'item__997': 11, 'yhat_lower__997': 51.71633077338074, 'forecast_date__997': datetime.date(2025, 8, 3), 'yhat__997': 79.32880256243737, 'store__998': 4, 'model_version__998': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__998': 84.44655123667327, 'item__998': 11, 'yhat_lower__998': 31.781677698205268, 'forecast_date__998': datetime.date(2025, 8, 4), 'yhat__998': 58.17450006723327, 'store__999': 4, 'model_version__999': 'prophet_v1.1.5_serverless_optimized', 'yhat_upper__999': 77.32838969218825, 'item__999': 11, 'yhat_lower__999': 24.217585083765155, 'forecast_date__999': datetime.date(2025, 8, 5), 'yhat__999': 51.055166276521085}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+[32mINFO[0m:     Application startup complete.
+[32mINFO[0m:     Uvicorn running on [1mhttp://127.0.0.1:54300[0m (Press CTRL+C to quit)
+[2m2025-07-26 09:45:41[0m [[32m[1minfo     [0m] [1mAPI Shutting down .....       [0m
+[31mERROR[0m:    Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "uvloop/loop.pyx", line 1512, in uvloop.loop.Loop.run_until_complete
+  File "uvloop/loop.pyx", line 1505, in uvloop.loop.Loop.run_until_complete
+  File "uvloop/loop.pyx", line 1379, in uvloop.loop.Loop.run_forever
+  File "uvloop/loop.pyx", line 557, in uvloop.loop.Loop._run
+  File "uvloop/handles/poll.pyx", line 216, in uvloop.loop.__on_uvpoll_event
+  File "uvloop/cbhandles.pyx", line 83, in uvloop.loop.Handle._run
+  File "uvloop/cbhandles.pyx", line 66, in uvloop.loop.Handle._run
+  File "uvloop/loop.pyx", line 399, in uvloop.loop.Loop._read_from_self
+  File "uvloop/loop.pyx", line 404, in uvloop.loop.Loop._invoke_signals
+  File "uvloop/loop.pyx", line 379, in uvloop.loop.Loop._ceval_process_signals
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/pyspark/core/context.py", line 390, in signal_handler
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/starlette/routing.py", line 701, in lifespan
+    await receive()
+  File "/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/uvicorn/lifespan/on.py", line 137, in receive
+    return await self.receive_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/queues.py", line 186, in get
+    await getter
+asyncio.exceptions.CancelledError
+
+INFO:py4j.clientserver:Closing down clientserver connection
+INFO:py4j.clientserver:Closing down clientserver connection
+INFO:py4j.clientserver:Closing down clientserver connection
+INFO:py4j.clientserver:Closing down clientserver connection
+INFO:py4j.clientserver:Closing down clientserver connection
+INFO:py4j.clientserver:Closing down clientserver connection
+INFO:py4j.clientserver:Closing down clientserver connection
+INFO:py4j.clientserver:Closing down clientserver connection

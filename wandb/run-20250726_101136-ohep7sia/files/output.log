@@ -1,0 +1,175 @@
+INFO:ml_pipeline.orchestrator:Instantiated Trainer...
+INFO:ml_pipeline.orchestrator:Instantiated predictor.....
+[2m2025-07-26 10:11:43[0m [[32m[1minfo     [0m] [1mML pipeline orchestrator instantiated....[0m
+[2m2025-07-26 10:11:43[0m [[32m[1minfo     [0m] [1mInstantiating training pipeline....[0m
+INFO:ml_pipeline.orchestrator:Starting training pipeline
+🛒 Simulating 91 days of retail operations across 20 stores
+[2m2025-07-26 10:11:44[0m [[32m[1minfo     [0m] [1m✅ Created 36,400 sales transactions[0m
+[2m2025-07-26 10:11:44[0m [[32m[1minfo     [0m] [1m📈 Average daily sales per SKU: 115.1 units[0m
+[2m2025-07-26 10:11:44[0m [[32m[1minfo     [0m] [1m📊 Sales volume range: 0 to 330 units/day[0m
+[2m2025-07-26 10:11:44[0m [[32m[1minfo     [0m] [1m📋 Data types: {'date': dtype('O'), 'store': dtype('int32'), 'item': dtype('int32'), 'sales': dtype('int64'), 'processing_timestamp': dtype('O')}[0m
+[2m2025-07-26 10:11:45[0m [[32m[1minfo     [0m] [1m🔍 Final DataFrame schema:     [0m
+root
+ |-- date: date (nullable = true)
+ |-- store: integer (nullable = true)
+ |-- item: integer (nullable = true)
+ |-- sales: long (nullable = true)
+ |-- processing_timestamp: timestamp (nullable = false)
+
+[2m2025-07-26 10:11:45[0m [[32m[1minfo     [0m] [1m💾 Writing to: forecasting.raw_sales_data[0m
+[2m2025-07-26 10:11:51[0m [[32m[1minfo     [0m] [1m✅ Sales history loaded successfully![0m
+[2m2025-07-26 10:11:51[0m [[32m[1minfo     [0m] [1m📊 Rows written: 36,400        [0m
+[2m2025-07-26 10:11:51[0m [[32m[1minfo     [0m] [1m🔍 Data Quality Report:        [0m
+[2m2025-07-26 10:11:51[0m [[32m[1minfo     [0m] [1m==================================================[0m
+[2m2025-07-26 10:11:53[0m [[32m[1minfo     [0m] [1m📊 Total records: 36,400       [0m
+[2m2025-07-26 10:11:53[0m [[32m[1minfo     [0m] [1m📅 Date range: 2025-04-27 to 2025-07-26[0m
+[2m2025-07-26 10:11:53[0m [[32m[1minfo     [0m] [1m🏪 Unique stores: 20           [0m
+[2m2025-07-26 10:11:53[0m [[32m[1minfo     [0m] [1m📦 Unique items: 20            [0m
+/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/jupyter_client/connect.py:22: DeprecationWarning: Jupyter is migrating its paths to use standard platformdirs
+given by the platformdirs library.  To remove this warning and
+see the appropriate new directories, set the environment variable
+`JUPYTER_PLATFORM_DIRS=1` and then run `jupyter --paths`.
+The use of platformdirs will be the default in `jupyter_core` v6
+  from jupyter_core.paths import jupyter_data_dir, jupyter_runtime_dir, secure_write
+[2m2025-07-26 10:11:54[0m [[32m[1minfo     [0m] [1m✅ Completeness: 36,400 sales records (100% complete)[0m
+[2m2025-07-26 10:11:54[0m [[32m[1minfo     [0m] [1m📈 Sales count: 36400.00       [0m
+[2m2025-07-26 10:11:54[0m [[32m[1minfo     [0m] [1m📈 Sales mean: 115.07          [0m
+[2m2025-07-26 10:11:54[0m [[32m[1minfo     [0m] [1m📈 Sales stddev: 40.73         [0m
+[2m2025-07-26 10:11:54[0m [[32m[1minfo     [0m] [1m📈 Sales min: 0.00             [0m
+[2m2025-07-26 10:11:54[0m [[32m[1minfo     [0m] [1m📈 Sales max: 330.00           [0m
+[2m2025-07-26 10:11:54[0m [[32m[1minfo     [0m] [1m
+🎯 Retail sales data validated and ready for demand forecasting![0m
+[2m2025-07-26 10:11:54[0m [[32m[1minfo     [0m] [1m📥 Loading retail sales history for AI analysis...[0m
+[2m2025-07-26 10:11:54[0m [[32m[1minfo     [0m] [1m✅ Sales data ready for analysis[0m
+[2m2025-07-26 10:11:54[0m [[32m[1minfo     [0m] [1m🛒 Total sales transactions: 36,400[0m
+[2m2025-07-26 10:11:54[0m [[32m[1minfo     [0m] [1m📅 Date range: 2025-04-27 to 2025-07-26[0m
+[2m2025-07-26 10:11:55[0m [[32m[1minfo     [0m] [1m🏪 Stores: 20                  [0m
+[2m2025-07-26 10:11:55[0m [[32m[1minfo     [0m] [1m📦 Items: 20                   [0m
+[2m2025-07-26 10:11:55[0m [[32m[1minfo     [0m] [1m🔍 Analyzing sales patterns for AI model training...[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m📈 Analyzing 75 store-item combinations:[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 15: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 10: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 13: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 7: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 7: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 6: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 11: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 9: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 10: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 4: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 12: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 13: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 13: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 15: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 3: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 11: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 6: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 14: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 6: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 10: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 9: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 8: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 15: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 14: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 2: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 1: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 3: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 12: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 8: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 2: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 4: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 1: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 7: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 9: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 11: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 14: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 8: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 5: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 5, Item 5: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 4, Item 12: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 1: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 2: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 7: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 3: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 2: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 9: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 1: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 3: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 14: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 5: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 11: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 5: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 4: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 9: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 15: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 3: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 8: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 1: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 4: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 14: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 11: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 12: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 10: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 12: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 2: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 5: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 15: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 13: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 3, Item 4: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 8: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 6: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 1, Item 10: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 7: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 13: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m   ✅ Store 2, Item 6: 91 records, 91 days[0m
+[2m2025-07-26 10:11:56[0m [[32m[1minfo     [0m] [1m
+🎯 75/75 product-store combinations ready for AI forecasting[0m
+[2m2025-07-26 10:11:57[0m [[32m[1minfo     [0m] [1m🎯 Discovered 400 store-item combinations in data[0m
+INFO:ml_pipeline.trainer:Starting model training
+DEBUG:cmdstanpy:input tempfile: /var/folders/t1/4k5475yj5b13x6zbbfjr5kj80000gn/T/tmprn36uy_w/fz5e_hux.json
+DEBUG:cmdstanpy:input tempfile: /var/folders/t1/4k5475yj5b13x6zbbfjr5kj80000gn/T/tmprn36uy_w/5rkfskmm.json
+DEBUG:cmdstanpy:idx 0
+DEBUG:cmdstanpy:running CmdStan, num_threads: None
+DEBUG:cmdstanpy:CmdStan args: ['/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/prophet/stan_model/prophet_model.bin', 'random', 'seed=66512', 'data', 'file=/var/folders/t1/4k5475yj5b13x6zbbfjr5kj80000gn/T/tmprn36uy_w/fz5e_hux.json', 'init=/var/folders/t1/4k5475yj5b13x6zbbfjr5kj80000gn/T/tmprn36uy_w/5rkfskmm.json', 'output', 'file=/var/folders/t1/4k5475yj5b13x6zbbfjr5kj80000gn/T/tmprn36uy_w/prophet_model_k7qmt7w/prophet_model-20250726101158.csv', 'method=optimize', 'algorithm=newton', 'iter=10000']
+10:11:58 - cmdstanpy - INFO - Chain [1] start processing
+INFO:cmdstanpy:Chain [1] start processing
+10:11:58 - cmdstanpy - INFO - Chain [1] done processing
+INFO:cmdstanpy:Chain [1] done processing
+/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/mlflow/models/model.py:421: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  self.utc_time_created = str(utc_time_created or datetime.utcnow())
+2025/07/26 10:12:00 WARNING mlflow.utils.environment: Failed to resolve installed pip version. ``pip`` will be added to conda.yaml environment spec without a version specifier.
+2025/07/26 10:12:00 INFO mlflow.models.model: Found the following environment variables used during model inference: [WANDB_API_KEY]. Please check if you need to set them when deploying the model. To disable this message, set environment variable `MLFLOW_RECORD_ENV_VARS_IN_MODEL_LOGGING` to `false`.
+[2m2025-07-26 10:12:00[0m [[32m[1minfo     [0m] [1mModel Trained successfully....[0m
+🏃 View run mercurial-moth-849 at: http://127.0.0.1:8000/#/experiments/292785914983623969/runs/33b5b1df81904982951106b18147bf88
+🧪 View experiment at: http://127.0.0.1:8000/#/experiments/292785914983623969
+[2m2025-07-26 10:12:00[0m [[32m[1minfo     [0m] [1mAPI Started.....              [0m
+INFO:ml_pipeline.orchestrator:Starting prediction pipeline
+<mlflow.models.model.ModelInfo object at 0x166253b60>
+Downloading artifacts: 100%|███████████████████| 8/8 [00:00<00:00, 104.36it/s]
+INFO:ml_pipeline.predictor:Model loaded successfully from MLflow
+INFO:ml_pipeline.orchestrator:model loaded....
+🎯 Discovered 400 store-item combinations in data
+📈 Processed 25/400 combinations...
+📈 Processed 50/400 combinations...
+📈 Processed 75/400 combinations...
+📈 Processed 100/400 combinations...
+📈 Processed 125/400 combinations...
+📈 Processed 150/400 combinations...
+📈 Processed 175/400 combinations...
+📈 Processed 200/400 combinations...
+📈 Processed 225/400 combinations...
+📈 Processed 250/400 combinations...
+📈 Processed 275/400 combinations...
+📈 Processed 300/400 combinations...
+📈 Processed 325/400 combinations...
+📈 Processed 350/400 combinations...
+📈 Processed 375/400 combinations...
+📈 Processed 400/400 combinations...
+✅ Forecasting complete! Generated predictions for 400 combinations
+🔮 Generated 6,000 individual demand predictions
+/Users/onyekachiobute/Documents/RestaurantAIServices/DemandForecastService/.venv/lib/python3.13/site-packages/sqlalchemy/sql/schema.py:3624: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  return util.wrap_callable(lambda ctx: fn(), fn)  # type: ignore
+INFO:ml_pipeline.predictor:Stored 6000 predictions
+INFO:ml_pipeline.orchestrator:Prediction pipeline completed. Generated 6000 predictions
+[32mINFO[0m:     Application startup complete.
+[32mINFO[0m:     Uvicorn running on [1mhttp://127.0.0.1:54300[0m (Press CTRL+C to quit)
